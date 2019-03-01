@@ -52,12 +52,12 @@ function createDoctorForm(){
 }
 
 function createAddDoctorForm(){
-    console.log("doc");
+    $("#addDocForm").show();
  
 }
 
 function createRemoveDoctorForm(){
-    console.log("doc");
+    $("#addDocForm").hide();
  
 }
 
