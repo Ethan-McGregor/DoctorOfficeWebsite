@@ -1,0 +1,4 @@
+{
+    "django.i18n": false,
+    "html.format.indentHandlebars": true
+}
