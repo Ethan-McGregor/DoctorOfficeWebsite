@@ -13,7 +13,7 @@
   <div class="jumbotron jumbotron-fluid">
     <div class="container">
       <h1 class="display-4">Welcome to Doctor Office Database!</h1>
-      <p class="lead">Use the dropdown menu for inforamtion you would like to edit or search for.</p>
+      <p class="lead">You can add/remove and update patient information.</p>
     </div>
   </div>
 </header>
@@ -27,10 +27,10 @@
         <div class="col" id="btns">
           <div class="card alert alert-primary">
             <div class="card-body">
-              <p class="card-text">Would you liked to access Doctors, Patients, or appointments?</p>
-              <button type="submit" class="btn btn-primary" id="Doctor">Doctors</button>
+              <p class="card-text">Search for a patient and access their information.</p>
+              <!-- <button type="submit" class="btn btn-primary" id="Doctor">Doctors</button> -->
               <button type="submit" class="btn btn-primary" id="Patient">Patients</button>
-              <button type="submit" class="btn btn-primary" id="Appointment">Appointments</button>
+              <!-- <button type="submit" class="btn btn-primary" id="Appointment">Appointments</button> -->
             </div>
           </div>
 
@@ -120,11 +120,11 @@
 
         </div>
       </div>
-  
+
 
       <div class="row" id="pat">
         <div class="col">
-          
+
           <form>
             <div class="form-group">
               <label for="exampleInputEmail1">Find a Patient</label>
@@ -132,17 +132,20 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text">Search by Name or Insurance Number</span>
                 </div>
-                <input type="text" aria-label="First name" class="form-control" placeholder="First Name">
-                <input type="text" aria-label="Last name" class="form-control" placeholder="Last Name">
-                <input type="text" aria-label="Id" class="form-control" placeholder="Insurance Number">
+                <input type="text" aria-label="First name" class="form-control" placeholder="First Name"
+                  id="searchPatientFirst">
+                <input type="text" aria-label="Last name" class="form-control" placeholder="Last Name"
+                  id="searchPatientLast">
+                <input type="text" aria-label="Id" class="form-control" placeholder="Insurance Number"
+                  id="searchPatientIns">
               </div>
             </div>
             <button type="button" class="btn btn-primary" id="SearchPatients">Search</button>
           </form>
-          
-                <div class="card-deck" id="cardContainer">
-                </div>
-           
+
+          <div class="card-deck" id="cardContainer">
+          </div>
+
 
           <div class="accordion" id="accordionExample">
             <div class="card">
