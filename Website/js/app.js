@@ -251,7 +251,7 @@ function postData(route) {
 
     };
 
-    xmlhttp.open("POST", "http://23.152.224.38" + route, true);
+    xmlhttp.open("POST", "https://23.152.224.38" + route, true);
     xmlhttp.setRequestHeader("Content-Type", "text/xml");
     xmlhttp.send();
 }
