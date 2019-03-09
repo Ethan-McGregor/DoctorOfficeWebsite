@@ -4,7 +4,7 @@ h1{
 #btns{
     text-align: center;
 }
-#doc{
+#about{
     display: none;
 }
 #pat{
@@ -20,4 +20,3 @@ h1{
     min-width: 100%;
     
 }
-

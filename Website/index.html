@@ -13,10 +13,11 @@
   <div class="jumbotron jumbotron-fluid">
     <div class="container">
       <h1 class="display-4">Welcome to Doctor Office Database!</h1>
-      <p class="lead">You can add/remove and update patient information.</p>
+      <p class="lead">You can Add/Remove and Update patient information from the database.</p>
     </div>
   </div>
 </header>
+
 
 <body>
 
@@ -28,15 +29,15 @@
           <div class="card alert alert-primary">
             <div class="card-body">
               <p class="card-text">Search for a patient and access their information.</p>
-              <!-- <button type="submit" class="btn btn-primary" id="Doctor">Doctors</button> -->
-              <button type="submit" class="btn btn-primary" id="Patient">Patients</button>
-              <!-- <button type="submit" class="btn btn-primary" id="Appointment">Appointments</button> -->
+
+              <button type="submit" class="btn btn-primary" id="Patient">Patient Page</button>
+              <button type="submit" class="btn btn-primary" id="About">About</button>
             </div>
           </div>
 
         </div>
       </div>
-      <div class="row" id="doc">
+      <div class="row" id="about">
         <div class="col">
           <form>
             <div class="form-group">
@@ -162,13 +163,49 @@
                 <div class="card-body">
                   <div class="input-group">
                     <div class="input-group-prepend">
-                      <span class="input-group-text">First and last name</span>
+                      <span class="input-group-text">First, Middle, and last name</span>
                     </div>
-                    <input type="text" aria-label="First name" class="form-control">
-                    <input type="text" aria-label="Last name" class="form-control">
+                    <input type="text" aria-label="First name" class="form-control" id="addPatientFirstName"
+                      Placeholder="First">
+                    <input type="text" aria-label="Middle Name" class="form-control" id="addPatientMiddleName"
+                      Placeholder="Middle">
+                    <input type="text" aria-label="Last name" class="form-control" id="addPatientLastName"
+                      Placeholder="Last">
+                  </div>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Date of Birth</span>
+                    </div>
+                    <input type="text" aria-label="Date of Birth" class="form-control" id="addPatientDOB"
+                      Placeholder="ex: yyyy-mm-dd">
+                  </div>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Gender</span>
+                    </div>
+                    <input type="text" aria-label="Gender" class="form-control" id="addPatientGender">
+                  </div>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Phone</span>
+                    </div>
+                    <input type="text" aria-label="Phone" class="form-control" id="addPatientPhone">
+                  </div>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Insurance Number</span>
+                    </div>
+                    <input type="text" aria-label="Insurance Number" class="form-control" id="addPatientInsurance">
+                  </div>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Address</span>
+                    </div>
+                    <input type="text" aria-label="Address" class="form-control" id="addPatientAddress">
                   </div>
                 </div>
-                <button type="button" class="btn btn-primary" id="addPatient">Search</button>
+
+                <button type="button" class="btn btn-primary" id="addPatient">Add Patient</button>
               </div>
             </div>
             <div class="card">
@@ -182,18 +219,21 @@
               </div>
               <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                 <div class="card-body">
-                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf
-                  moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-                  Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda
-                  shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea
-                  proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim
-                  aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Insurance Number</span>
+                    </div>
+                    <input type="text" aria-label="Insurance Number" class="form-control" id="removePatientinsurance">
+                  </div>
+
                 </div>
+                <button type="button" class="btn btn-primary" id="removePatient">Remove Patient</button>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
 
     </div>
 
