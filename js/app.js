@@ -219,7 +219,7 @@ function getPatientData(route) {
 
     };
 
-    xmlhttp.open("GET", "https://23.152.224.38" + route, true);
+    xmlhttp.open("GET", "http://23.152.224.38" + route, true);
     xmlhttp.setRequestHeader("Content-Type", "text/xml");
     xmlhttp.send();
 }
@@ -235,7 +235,7 @@ function getMedData(route) {
 
     };
 
-    xmlhttp.open("GET", "https://23.152.224.38" + route, true);
+    xmlhttp.open("GET", "http://23.152.224.38" + route, true);
     xmlhttp.setRequestHeader("Content-Type", "text/xml");
     xmlhttp.send();
 }
@@ -251,7 +251,7 @@ function postData(route) {
 
     };
 
-    xmlhttp.open("POST", "https://23.152.224.38" + route, true);
+    xmlhttp.open("POST", "http://23.152.224.38" + route, true);
     xmlhttp.setRequestHeader("Content-Type", "text/xml");
     xmlhttp.send();
 }
