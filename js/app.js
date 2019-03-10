@@ -1,15 +1,18 @@
 'use strict';
 
-//TODO: MAKE generic call to find which med or diagnosis button is clicked and get proper info.<SEE TEST CLICK METHOD>
-//TODO: Create real forms for remove and add patients
-//TODO: figure out updating
-//TODO: Maybe make user find patient in search and records can be changed there?
-//TODO: in each card can be a update button
+    //API routes
+    //updatePatient/<firstName>/<middleName>/<lastName>/<gender>/<DOB>/<address>/<phone>/<newInsuranceNum>/<oldInsuranceNum>
+    //findPatient/<firstName>/<middleName>/<lastName>/<insuranceNum>
+    //getPatientInfo/<insuranceNum>
+    //addPatient/<firstName>/<middleName>/<lastName>/<gender>/<DOB>/<address>/<phone>/<insuranceNum>
+    //removePatient/<insuranceNum>
+    //getFutureAppointments
 
 //used to reference patient data for updating
 var patientsInfo = "";
 var patientDiagInfo = "";
 var patientName = "";
+var isMed = false;
 //Used to refresh page with current patient info
 var usedRoute = "";
 
@@ -22,17 +25,20 @@ function ifClicked() {
     var about = $("#About");
 
     pEvent.click(function (event) {
+        isMed = false;
         refreshPage();
         createPatientForm();
 
     });
     about.click(function (event) {
+        isMed = false;
         refreshPage();
         createAboutForm();
 
     });
 
     searchPatients.click(function (event) {
+        isMed = false;
         var valueFirst = $("#searchPatientFirst")[0].value;
         var valueLast = $("#searchPatientLast")[0].value;
         var valueIns = $("#searchPatientIns")[0].value;
@@ -121,7 +127,7 @@ function ifClicked() {
         $("#sAlertR").remove();
         $("#lastAleartB").remove();
         var insNum =  $("#removePatientinsurance")[0].value;
-        var removeAddedPatientAlert = $("<div class=alert role=alert id=sAlertR ><Strong>Sucess!</strong> You have added: " +insNum+" as a patient.</div>");
+        var removeAddedPatientAlert = $("<div class=alert role=alert id=sAlertR ><Strong>Sucess!</strong> You have removed: " +insNum+" as a patient.</div>");
         var bad = $("<div class=alert role=alert id=lastAleartB >Please input valid Insurance Number</div>");
        
         if (insNum.length != 9 || isNaN(insNum)){
@@ -136,13 +142,6 @@ function ifClicked() {
 
     });
 
-
-    //updatePatient/<firstName>/<middleName>/<lastName>/<gender>/<DOB>/<address>/<phone>/<newInsuranceNum>/<oldInsuranceNum>
-    //findPatient/<firstName>/<middleName>/<lastName>/<insuranceNum>
-    //getPatientInfo/<insuranceNum>
-    //addPatient/<firstName>/<middleName>/<lastName>/<gender>/<DOB>/<address>/<phone>/<insuranceNum>
-    //removePatient/<insuranceNum>
-    //getFutureAppointments
     var dobFormSubmit = $("[id^='dobFormSubmit']");
     dobFormSubmit.click(function (event) {
         var index = event.target.id.substring(event.target.id.length - 1, event.target.id.length);
@@ -205,6 +204,24 @@ function ifClicked() {
         getMedData(route);
 
     });
+
+    var appUpdate = $("[id^='appFormSubmit']");
+    appUpdate.click(function (event) {
+    
+        var index = event.target.id.substring(event.target.id.length - 1, event.target.id.length);
+        var insNum = patientsInfo[Number(index)].InsuranceNumber;
+        var value = $("#collapseApp" + index)[0].value;
+        var time = Object.keys(patientDiagInfo.Appointments)[0].split(" ");
+        var newTime = time[0] + "_" + time[1];
+        console.log(newTime);
+        var route = "/updateAppointment/"+newTime+"/"+value;
+        isMed = true;
+        postData(route);
+
+        
+
+    });
+
 }
 
 function getPatientData(route) {
@@ -213,7 +230,12 @@ function getPatientData(route) {
         if (this.readyState == 4 && this.status == 200) {
             var patients = JSON.parse(this.responseText);
             usedRoute = route;
-            createPatientCards(patients);
+            if (isMed){
+                createMedicationDiagnosisCards(patients);
+            }else{
+                createPatientCards(patients);
+            }
+           
 
         }
 
@@ -223,12 +245,12 @@ function getPatientData(route) {
     xmlhttp.setRequestHeader("Content-Type", "text/xml");
     xmlhttp.send();
 }
-function getMedData(route) {
+function getMedData(route , isMed) {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var patients = JSON.parse(this.responseText);
-            // usedRoute = route;
+            usedRoute = route;
             createMedicationDiagnosisCards(patients);
 
         }
@@ -252,7 +274,7 @@ function postData(route) {
     };
 
     xmlhttp.open("POST", "http://23.152.224.38" + route, true);
-    // xmlhttp.setRequestHeader("Content-Type", "text/xml");
+    xmlhttp.setRequestHeader("Content-Type", "text/xml");
     xmlhttp.send();
 }
 
@@ -278,24 +300,9 @@ function createAppointmentForm() {
 }
 
 
-// function getPatients() {
-//     var xmlhttp = new XMLHttpRequest();
-//     xmlhttp.onreadystatechange = function () {
-//         if (this.readyState == 4 && this.status == 200) {
-//             var patients = JSON.parse(this.responseText);
-
-//             createPatientCards(patients);
-//         }
-//     };
-//     xmlhttp.open("GET", "http://127.0.0.1:5000/findPatient/None/None/None/None", true);
-//     xmlhttp.send();
-
-// }
-
-
-
 function createPatientCards(patients) {
     refreshPage();
+    isMed = false;
     var i;
     var row = $("<div class=row id=row>")
     $("#cardContainer").append(row)
@@ -409,12 +416,16 @@ function createMedicationDiagnosisCards(patients) {
 
         var appBut = $("<button class=list-group-item type=button data-toggle=collapse data-target=#appDiv" + i + " aria-expanded=true aria-controls=collapseOne id=buttonApp" + i + " > " + "<Strong>Appointmnet</Strong>: " + Object.keys(patients.Appointments)[i] + " </button>");
         $("#accordionExampleMed").append(appBut);
+        var dis = $("<li class=list-group-item type=button data-toggle=collapse data-target=#appDiv" + i + " aria-expanded=true aria-controls=collapseOne id=buttonApp" + i + " > <Strong>Description</Strong>: " + patients.Appointments[Object.keys(patients.Appointments)[i]].Description + " </li>");
+        $("#accordionExampleMed").append(dis);
         var collapseAppDiv = $("<div id=appDiv" + i + " class=collapse aria-labelledby=headingOne data-parent=#accordionExampleMed></div>");
         $("#accordionExampleMed").append(collapseAppDiv);
         var appForm = $("<input type=text id=collapseApp" + i + " class=form-conrol></input>");
         $("#appDiv" + i).append(appForm);
         var appFormSub = $("<button type=button class=btn btn-primary id=appFormSubmit" + i + " >Update</button></div></div></div>");
         $("#appDiv" + i).append(appFormSub);
+        var dur = $("<li class=list-group-item> <Strong>Duration</Strong>: " + patients.Appointments[Object.keys(patients.Appointments)[i]].Duration + " </li>");
+        $("#accordionExampleMed").append(dur);
     };
 
     for (j = 0; j < Object.keys(patients.Diagnoses).length; j++) {
@@ -425,6 +436,8 @@ function createMedicationDiagnosisCards(patients) {
         $("#accordionExampleMed").append(diagBut);
         var collapseDiagDiv = $("<div id=diagDiv" + i + " class=collapse aria-labelledby=headingOne data-parent=#accordionExampleMed></div>");
         $("#accordionExampleMed").append(collapseDiagDiv);
+        var time = $("<li class=list-group-item> <Strong>Notes</Strong>: " + patients.Diagnoses[Object.keys(patients.Diagnoses)[j]].Remarks + " </li>");
+        $("#buttonDiag" + i).append(time);
 
     };
 
@@ -432,11 +445,17 @@ function createMedicationDiagnosisCards(patients) {
         console.log(Object.keys(patients.PrescribedMedication)[h]);
         console.log(patients.PrescribedMedication[Object.keys(patients.PrescribedMedication)[h]]);
 
-        var pmBut = $("<button class=list-group-item type=button data-toggle=collapse  aria-expanded=true aria-controls=collapseOne id=buttonPm" + i + " > " + "<Strong>Prescirbed Medication</Strong>: " + Object.keys(patients.PrescribedMedication)[h] + " </button>");
+        var pmBut = $("<button class=list-group-item type=button data-toggle=collapse aria-expanded=true aria-controls=collapseOne id=buttonPm" + i + " > " + "<Strong>Prescirbed Medication</Strong>: " + Object.keys(patients.PrescribedMedication)[h] + " </button>");
         $("#accordionExampleMed").append(pmBut);
         var collapsePmDiv = $("<div id=pmDiv" + i + " class=collapse aria-labelledby=headingOne data-parent=#accordionExampleMed></div>");
         $("#accordionExampleMed").append(collapsePmDiv);
-
+        var max = $("<li class=list-group-item> <Strong>Max Dosage</Strong>: " + patients.PrescribedMedication[Object.keys(patients.PrescribedMedication)[h]].MaxDosage + " </li>");
+        $("#buttonPm" + i ).append(max);
+        var amount = $("<li class=list-group-item> <Strong>Duration</Strong>: " + patients.PrescribedMedication[Object.keys(patients.PrescribedMedication)[h]].PrescribedAmount + " </li>");
+        $("#buttonPm" + i ).append(amount);
+        var refill = $("<li class=list-group-item> <Strong>Duration</Strong>: " + patients.PrescribedMedication[Object.keys(patients.PrescribedMedication)[h]].Refill + " </li>");
+        $("#buttonPm" + i ).append(refill);
+        
     };
 
 
