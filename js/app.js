@@ -421,28 +421,22 @@ function createMedicationDiagnosisCards(patients) {
         console.log(Object.keys(patients.Diagnoses)[j]);
         console.log(patients.Diagnoses[Object.keys(patients.Diagnoses)[j]]);
 
-        var diagBut = $("<button class=list-group-item type=button data-toggle=collapse data-target=#diagDiv" + i + " aria-expanded=true aria-controls=collapseOne id=buttonDiag" + i + " > " + "<Strong>Diagnosis</Strong>: " + Object.keys(patients.Diagnoses)[j] + " </button>");
+        var diagBut = $("<button class=list-group-item type=button data-toggle=collapse  aria-expanded=true aria-controls=collapseOne id=buttonDiag" + i + " > " + "<Strong>Diagnosis</Strong>: " + Object.keys(patients.Diagnoses)[j] + " </button>");
         $("#accordionExampleMed").append(diagBut);
         var collapseDiagDiv = $("<div id=diagDiv" + i + " class=collapse aria-labelledby=headingOne data-parent=#accordionExampleMed></div>");
         $("#accordionExampleMed").append(collapseDiagDiv);
-        var diagForm = $("<input type=text id=collapseDiag" + i + " class=form-conrol></input>");
-        $("#diagDiv" + i).append(diagForm);
-        var diagFormSub = $("<button type=button class=btn btn-primary id=diagFormSubmit" + i + " >Update</button></div></div></div>");
-        $("#diagDiv" + i).append(diagFormSub);
+
     };
 
     for (h = 0; h < Object.keys(patients.PrescribedMedication).length; h++) {
         console.log(Object.keys(patients.PrescribedMedication)[h]);
         console.log(patients.PrescribedMedication[Object.keys(patients.PrescribedMedication)[h]]);
 
-        var pmBut = $("<button class=list-group-item type=button data-toggle=collapse data-target=#pmDiv" + i + " aria-expanded=true aria-controls=collapseOne id=buttonPm" + i + " > " + "<Strong>Prescirbed Medication</Strong>: " + Object.keys(patients.PrescribedMedication)[h] + " </button>");
+        var pmBut = $("<button class=list-group-item type=button data-toggle=collapse  aria-expanded=true aria-controls=collapseOne id=buttonPm" + i + " > " + "<Strong>Prescirbed Medication</Strong>: " + Object.keys(patients.PrescribedMedication)[h] + " </button>");
         $("#accordionExampleMed").append(pmBut);
         var collapsePmDiv = $("<div id=pmDiv" + i + " class=collapse aria-labelledby=headingOne data-parent=#accordionExampleMed></div>");
         $("#accordionExampleMed").append(collapsePmDiv);
-        var pmForm = $("<input type=text id=collapsePm" + i + " class=form-conrol></input>");
-        $("#pmDiv" + i).append(pmForm);
-        var pmFormSub = $("<button type=button class=btn btn-primary id=pmFormSub" + i + " >Update</button></div></div></div>");
-        $("#pmDiv" + i).append(pmFormSub);
+
     };
 
 
