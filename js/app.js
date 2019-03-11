@@ -1,12 +1,12 @@
 'use strict';
 
     //API routes
-    //updatePatient/<firstName>/<middleName>/<lastName>/<gender>/<DOB>/<address>/<phone>/<newInsuranceNum>/<oldInsuranceNum>
-    //findPatient/<firstName>/<middleName>/<lastName>/<insuranceNum>
-    //getPatientInfo/<insuranceNum>
-    //addPatient/<firstName>/<middleName>/<lastName>/<gender>/<DOB>/<address>/<phone>/<insuranceNum>
-    //removePatient/<insuranceNum>
-    //getFutureAppointments
+//updatePatient/<firstName>/<middleName>/<lastName>/<gender>/<DOB>/<address>/<phone>/<newInsuranceNum>/<oldInsuranceNum>
+//findPatient/<firstName>/<middleName>/<lastName>/<insuranceNum>
+//getPatientInfo/<insuranceNum>
+//addPatient/<firstName>/<middleName>/<lastName>/<gender>/<DOB>/<address>/<phone>/<insuranceNum>
+//removePatient/<insuranceNum>
+//getFutureAppointments
 
 //used to reference patient data for updating
 var patientsInfo = "";
@@ -285,9 +285,6 @@ function postData(route) {
     xmlhttp.setRequestHeader("Content-Type", "text/xml");
     xmlhttp.send();
 }
-
-
-
 
 function createPatientForm() {
     $("#pat").show();
