@@ -68,6 +68,7 @@ function ifClicked() {
         $("#firstAleart").remove();
         $("#lastAleart").remove();
         $("#sAlert").remove();
+        $("#zeroAlert").remove();
         var firstName =  $("#addPatientFirstName")[0].value;
         var lastName =  $("#addPatientLastName")[0].value;
         var middleName =  $("#addPatientMiddleName")[0].value;
