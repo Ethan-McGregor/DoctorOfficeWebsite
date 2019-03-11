@@ -79,7 +79,7 @@ function ifClicked() {
         var addInsAlert = $("<div class=alert role=alert id=insAleart >Please input a valid Insurance number I.E 9 digets</div>");
         var addFirstAlert = $("<div class=alert role=alert id=firstAleart >Please input a First Name</div>");
         var addLastAlert = $("<div class=alert role=alert id=lastAleart >Please input a Last Name</div>");
-        var zero = $("<div class=alert role=alert id=lastAleart >Please do not start the insurance num as a 0</div>");
+        var zero = $("<div class=alert role=alert id=zeroAleart >Please do not start the insurance num as a 0</div>");
         var addAddedPatientAlert = $("<div class=alert role=alert id=sAlert ><Strong>Sucess!</strong> You have added: " +firstName+  " "+ lastName+" as a patient.</div>");
         var errorCount = 0;
         if(firstName == ""){
@@ -112,7 +112,7 @@ function ifClicked() {
         if(insNum[0] == 0){
             console.log("Started with 0");
             $("#addPatient").before(zero);
-            $("#insAleart").addClass("alert-warning");
+            $("#zeroAleart").addClass("alert-warning");
             errorCount += 1;
         };
         if(address == ""){
