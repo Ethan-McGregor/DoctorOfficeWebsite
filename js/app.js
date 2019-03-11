@@ -424,7 +424,7 @@ function createMedicationDiagnosisCards(patients) {
         $("#appDiv" + i).append(appForm);
         var appFormSub = $("<button type=button class=btn btn-primary id=appFormSubmit" + i + " >Update</button></div></div></div>");
         $("#appDiv" + i).append(appFormSub);
-        var dur = $("<li class=list-group-item> <Strong>Duration</Strong>: " + patients.Appointments[Object.keys(patients.Appointments)[i]].Duration + " </li>");
+        var dur = $("<li class=list-group-item> <Strong>Duration</Strong>(Min): " + patients.Appointments[Object.keys(patients.Appointments)[i]].Duration + " </li>");
         $("#accordionExampleMed").append(dur);
     };
 
@@ -451,9 +451,9 @@ function createMedicationDiagnosisCards(patients) {
         $("#accordionExampleMed").append(collapsePmDiv);
         var max = $("<li class=list-group-item> <Strong>Max Dosage</Strong>: " + patients.PrescribedMedication[Object.keys(patients.PrescribedMedication)[h]].MaxDosage + " </li>");
         $("#buttonPm" + i ).append(max);
-        var amount = $("<li class=list-group-item> <Strong>Duration</Strong>: " + patients.PrescribedMedication[Object.keys(patients.PrescribedMedication)[h]].PrescribedAmount + " </li>");
+        var amount = $("<li class=list-group-item> <Strong>Prescribed Amount</Strong>: " + patients.PrescribedMedication[Object.keys(patients.PrescribedMedication)[h]].PrescribedAmount + " </li>");
         $("#buttonPm" + i ).append(amount);
-        var refill = $("<li class=list-group-item> <Strong>Duration</Strong>: " + patients.PrescribedMedication[Object.keys(patients.PrescribedMedication)[h]].Refill + " </li>");
+        var refill = $("<li class=list-group-item> <Strong>Refill</Strong>: " + patients.PrescribedMedication[Object.keys(patients.PrescribedMedication)[h]].Refill + " </li>");
         $("#buttonPm" + i ).append(refill);
         
     };
