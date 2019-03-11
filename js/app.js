@@ -108,6 +108,10 @@ function ifClicked() {
             $("#insAleart").addClass("alert-warning");
             errorCount += 1;
         };
+        if(insNum[0] == 0){
+            console.log("Started with 0");
+            errorCount += 1;
+        };
         if(address == ""){
             address = "None";
         };
