@@ -164,11 +164,20 @@ function ifClicked() {
 
     var genderFormSubmit = $("[id^='genderFormSubmit']");
     genderFormSubmit.click(function (event) {
-        var index = event.target.id.substring(event.target.id.length - 1, event.target.id.length);
+        // var test = event.parent.id;
+        console.log(event);
+        var index = event.target.parentElement.parentElement.parentElement.id.substring(9, event.target.parentElement.parentElement.parentElement.id.length);
+        console.log("index");
+
+        console.log(index);
+        console.log("index");
+
+
         var insNum = patientsInfo[Number(index)].InsuranceNumber;
         var value = $("#collapseGender" + index)[0].value;
         var route = "/updatePatient/None/None/None/" + value + "/None/None/None/None/" + insNum;
-
+        console.log(value);
+        console.log(patientsInfo);
         postData(route);
     });
 
@@ -230,6 +239,27 @@ function ifClicked() {
 
     });
 
+    //'/addAppointment/<patientid>/<roomnumber>/<starttime>/<duration>/<description>'
+    var appAddButton = $("[id^='addAppFormSub']");
+    appAddButton.click(function (event) {
+    
+        var index = event.target.id.substring(event.target.id.length - 1, event.target.id.length);
+        console.log(index);
+        console.log(patientDiagInfo);
+        var insNum = patientsInfo[Number(index)].InsuranceNumber;
+        console.log(insNum);
+        var starttime = $("#addAppFormTime" + index)[0].value;
+        var dur = $("#addAppFormDur" + index)[0].value;
+        var dis = $("#addAppFormType" + index)[0].value;
+        console.log(dur);
+
+        var route = "/addAppointment/"+insNum+"/101/"+starttime+"/"+dur+"/"+dis;
+        isMed = true;
+        postData(route);
+
+        
+
+    });
 }
 
 function getPatientData(route) {
@@ -379,10 +409,10 @@ function createPatientCards(patients) {
         var docForm = $("<input type=text id=collapseDoc" + i + " class=form-conrol></input>");
         $("#docDiv" + i).append(docForm);
 
-        var body = $("<div class=card-body id=card-body2" + i + ">");
+        var body = $("<div class=card-body id=card-bodysec" + i + ">");
         $("#card" + i).append(body);
         var card4 = $("<button type=button class=list-group-item id=card-link" + i + ">Diagnosis - Medication - Appointments</button></div></div></div></div>");
-        $("#card-body2" + i).append(card4);
+        $("#card-bodysec" + i).append(card4);
     }
     //All accoridan buttons have this
     $("[id^='button']").css("width", "100%");
@@ -419,8 +449,16 @@ function createMedicationDiagnosisCards(patients) {
         console.log(Object.keys(patients.Appointments)[i]);
         console.log(patients.Appointments[Object.keys(patients.Appointments)[i]]);
 
-        var appBut = $("<button class=list-group-item type=button data-toggle=collapse data-target=#appDiv" + i + " aria-expanded=true aria-controls=collapseOne id=buttonApp" + i + " > " + "<Strong>Appointmnet</Strong>: " + Object.keys(patients.Appointments)[i] + " </button>");
+        var appBut = $("<button class=list-group-item type=button data-toggle=collapse data-target=#addRemoveDiv" + i + " aria-expanded=true aria-controls=collapseTwo id=buttonApp" + i + " > " + "<Strong>Appointmnet</Strong>: " + Object.keys(patients.Appointments)[i] + " </button>");
         $("#accordionExampleMed").append(appBut);
+        var addRemoveDiv = $("<div id=addRemoveDiv" + i + " class=collapse aria-labelledby=headingTwo data-parent=#accordionExampleMed></div>");
+        $("#accordionExampleMed").append(addRemoveDiv)
+
+        var remove = $("<button type=button class=btn id=appRemove" + i + " >Remove this Appointment</button>");
+        $(remove).addClass("btn-danger");
+        $("#addRemoveDiv"+i).append(remove);
+
+
         var dis = $("<li class=list-group-item type=button data-toggle=collapse data-target=#appDiv" + i + " aria-expanded=true aria-controls=collapseOne id=buttonApp" + i + " > <Strong>Description</Strong>: " + patients.Appointments[Object.keys(patients.Appointments)[i]].Description + " </li>");
         $("#accordionExampleMed").append(dis);
         var collapseAppDiv = $("<div id=appDiv" + i + " class=collapse aria-labelledby=headingOne data-parent=#accordionExampleMed></div>");
@@ -431,6 +469,22 @@ function createMedicationDiagnosisCards(patients) {
         $("#appDiv" + i).append(appFormSub);
         var dur = $("<li class=list-group-item> <Strong>Duration</Strong>(Min): " + patients.Appointments[Object.keys(patients.Appointments)[i]].Duration + " </li>");
         $("#accordionExampleMed").append(dur);
+
+        var add = $("<button type=button class=btn id=appAdd" + i + " data-toggle=collapse data-target=#addAppDiv" + i + " aria-expanded=true aria-controls=collapseTwo >Add Appointment</button>");
+        $(add).addClass("btn-primary");
+        $("#accordionExampleMed").append(add);
+
+        var addAppDiv = $("<div id=addAppDiv" + i + " class=collapse aria-labelledby=headingOne data-parent=#accordionExampleMed></div>");
+        $("#accordionExampleMed").append(addAppDiv);
+        var addAppFormTime = $("<input type=text id=addAppFormTime" + i + " class=form-conrol placeholder=time></input>");
+        $("#addAppDiv" + i).append(addAppFormTime);
+        var addAppFormType = $("<input type=text id=addAppFormType" + i + " class=form-conrol placeholder=type></input>");
+        $("#addAppDiv" + i).append(addAppFormType);
+        var addAppFormDur = $("<input type=text id=addAppFormDur" + i + " class=form-conrol placeholder=Duration></input>");
+        $("#addAppDiv" + i).append(addAppFormDur);
+        var addAppFormSub = $("<button type=button class=btn btn-primary id=addAppFormSub" + i + " >Add Appointment</button></div></div></div>");
+        $("#addAppDiv" + i).append(addAppFormSub);
+        $(addAppFormSub).addClass("btn-secondary");
     };
 
     for (j = 0; j < Object.keys(patients.Diagnoses).length; j++) {
