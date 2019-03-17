@@ -275,6 +275,7 @@ function getPatientData(route) {
             }else{
                 createPatientCards(patients);
             }
+            console.log(patients);
            
 
         }
