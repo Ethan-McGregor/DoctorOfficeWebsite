@@ -152,7 +152,7 @@ function ifClicked() {
 
     var dobFormSubmit = $("[id^='dobFormSubmit']");
     dobFormSubmit.click(function (event) {
-        var index = event.target.id.substring(event.target.id.length - 1, event.target.id.length);
+        var index = event.target.parentElement.parentElement.parentElement.id.substring(9, event.target.parentElement.parentElement.parentElement.id.length);
         var insNum = patientsInfo[Number(index)].InsuranceNumber;
         var value = $("#collapseDOB" + index)[0].value;
         var route = "/updatePatient/None/None/None/None/" + value + "/None/None/None/" + insNum;
@@ -183,7 +183,7 @@ function ifClicked() {
 
     var phoneFormSubmit = $("[id^='phoneFormSubmit']");
     phoneFormSubmit.click(function (event) {
-        var index = event.target.id.substring(event.target.id.length - 1, event.target.id.length);
+        var index = event.target.parentElement.parentElement.parentElement.id.substring(9, event.target.parentElement.parentElement.parentElement.id.length);
         var insNum = patientsInfo[Number(index)].InsuranceNumber;
         var value = $("#collapsePhone" + index)[0].value;
         var route = "/updatePatient/None/None/None/None/None/None/" + value + "/None/" + insNum;
@@ -196,7 +196,7 @@ function ifClicked() {
     insFormSubmit.click(function (event) {
         $("#sAlertRT").remove();
         $("#lastAleartBT").remove();
-        var index = event.target.id.substring(event.target.id.length - 1, event.target.id.length);
+        var index = event.target.parentElement.parentElement.parentElement.id.substring(9, event.target.parentElement.parentElement.parentElement.id.length);
         var insNum = patientsInfo[Number(index)].InsuranceNumber;
         var value = $("#collapseIns" + index)[0].value;
         var route = "/updatePatient/None/None/None/None/None/None/None/" + value + "/" + insNum;
@@ -214,8 +214,10 @@ function ifClicked() {
 
     var medDiag = $("[id^='card-link']");
     medDiag.click(function (event) {
-        var index = event.target.id.substring(event.target.id.length - 1, event.target.id.length);
+        var index = event.target.id.substring(9, event.target.id.length);
+        console.log(index);
         var insNum = patientsInfo[Number(index)].InsuranceNumber;
+        console.log(patientsInfo);
         var route = "/getPatientInfo/" + insNum;
         patientName = patientsInfo[Number(index)].Name;
         getMedData(route);
@@ -225,7 +227,7 @@ function ifClicked() {
     var appUpdate = $("[id^='appFormSubmit']");
     appUpdate.click(function (event) {
     
-        var index = event.target.id.substring(event.target.id.length - 1, event.target.id.length);
+        var index = event.target.parentElement.parentElement.parentElement.id.substring(9, event.target.parentElement.parentElement.parentElement.id.length);
         var insNum = patientsInfo[Number(index)].InsuranceNumber;
         var value = $("#collapseApp" + index)[0].value;
         var time = Object.keys(patientDiagInfo.Appointments)[0].split(" ");
@@ -243,7 +245,7 @@ function ifClicked() {
     var appAddButton = $("[id^='addAppFormSub']");
     appAddButton.click(function (event) {
     
-        var index = event.target.id.substring(event.target.id.length - 1, event.target.id.length);
+        var index = event.target.parentElement.parentElement.parentElement.id.substring(9, event.target.parentElement.parentElement.parentElement.id.length);
         console.log(index);
         console.log(patientDiagInfo);
         var insNum = patientsInfo[Number(index)].InsuranceNumber;
