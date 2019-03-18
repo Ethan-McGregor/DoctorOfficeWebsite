@@ -151,6 +151,52 @@
                 <button type="button" class="btn btn-primary" id="removePatient">Remove Patient</button>
               </div>
             </div>
+            <div class="card">
+              <div class="card-header" id="headingThree">
+                <h2 class="mb-0">
+                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree"
+                    aria-expanded="false" aria-controls="collapseTwo">
+                    Add Appointment
+                  </button>
+                </h2>
+              </div>
+              <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                <div class="card-body">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">insurance Number</span>
+                    </div>
+                    <input type="text" aria-label="Date and Time" class="form-control" id="insNumAddApp" placeholder="Ex: 100000000">
+            
+                  </div>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Date and Time</span>
+                    </div>
+                   
+                    <input type="text" aria-label="Date and Time" class="form-control" id="addAppFormTime" placeholder="YYYY-MM-DD HH-MM-SS">
+                   
+                  </div>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Duration</span>
+                    </div>
+
+                    <input type="text" aria-label="Discription" class="form-control" id="addAppFormDur" placeholder="60 or 90 (min)" >
+                  
+                  </div>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Appointment Discription</span>
+                    </div>
+                
+                    <input type="text" aria-label="Type" class="form-control" id="addAppFormType" >
+                  </div>
+
+                </div>
+                <button type="button" class="btn btn-primary" id="addAppFormSub">Add Appointment</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
