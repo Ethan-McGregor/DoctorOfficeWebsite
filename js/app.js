@@ -209,9 +209,7 @@ function ifClicked() {
         } else {
 
             postData(route);
-            ;
         }
-
 
     });
 
@@ -230,26 +228,22 @@ function ifClicked() {
     var appUpdate = $("[id^='appFormSubmit']");
     appUpdate.click(function (event) {
 
-    //     var index = event.target.parentElement.parentElement.parentElement.id.substring(9, event.target.parentElement.parentElement.parentElement.id.length);
-    //    console.log(patientName)
-        var insNum = patientInsNum;
         var index = event.target.id.substring(13, event.target.id.length);
-        console.log(index);
         var value = $("#collapseApp" + index)[0].value;
-        // var time = Object.keys(patientDiagInfo.Appointments)[index].split(" ");
-        // var newTime = time[0] + "_" + time[1];
         var route = "/updateAppointment/" + Object.keys(patientDiagInfo.Appointments)[index] + "/" + value;
         isMed = true;
         postData(route);
-
-
 
     });
 
     //'/addAppointment/<patientid>/<roomnumber>/<starttime>/<duration>/<description>'
     var appAddButton = $("[id^='addAppFormSub']");
+  
     appAddButton.click(function (event) {
-
+        $("#lastAleartBT").remove();
+        $("#lastAleartDateBad").remove();
+        $("#lastAleartDurBad").remove();
+        $("#lastAleartGood").remove();
         var insNum = $("#insNumAddApp")[0].value;
         var starttime = $("#addAppFormTime")[0].value;
         var dur = $("#addAppFormDur")[0].value;
@@ -258,10 +252,26 @@ function ifClicked() {
         var route = "/addAppointment/" + insNum + "/101/" + starttime + "/" + dur + "/" + dis;
         isMed = true;
     
-        postData(route);
+        var insAlertBad = $("<div class=alert role=alert id=lastAleartBT >Please input valid Insurance Number</div>");
+        var alertGood = $("<div class=alert role=alert id=lastAleartGood >You have succesfully added an appointment!</div>");
+        var dateAlertBad = $("<div class=alert role=alert id=lastAleartDateBad >Please input valid date</div>");
+        var durAlertBad = $("<div class=alert role=alert id=lastAleartDurBad >Please input valid duration</div>");
 
 
-
+        if (insNum.length != 9 || isNaN(insNum)) {
+            $("#addAppFormSub").before(insAlertBad);
+            $("#lastAleartBT").addClass("alert-warning");
+        } else if(starttime.length != 19){
+            $("#addAppFormSub").before(dateAlertBad);
+            $("#lastAleartDateBad").addClass("alert-warning");
+        } else if(Number(dur) != 60 && Number(dur) != 90){
+            $("#addAppFormSub").before(durAlertBad);
+            $("#lastAleartDurBad").addClass("alert-warning");
+         } else {
+            $("#addAppFormSub").before(alertGood);
+            $("#lastAleartGood").addClass("alert-success");
+            postData(route);
+        }
     });
 
         //'/removeAppointment/<starttime>''
@@ -270,15 +280,10 @@ function ifClicked() {
     
             var index = event.target.id.substring(9, event.target.id.length);
             var starttime = Object.keys(patientDiagInfo.Appointments)[index];
-
-    
             var route = "/removeAppointment/" + starttime;
             isMed = true;
         
             postData(route);
-    
-    
-    
         });
 }
 
