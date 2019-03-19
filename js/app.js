@@ -15,6 +15,7 @@ var patientName = "";
 var patientInsNum = "";
 var patientIndex = "";
 var isMed = false;
+var isShowAll = false;
 //Used to refresh page with current patient info
 var usedRoute = "";
 
@@ -25,6 +26,7 @@ function ifClicked() {
     var addPatient = $("#addPatient");
     var removePatient = $("#removePatient");
     var about = $("#About");
+    var allAppoinments = $("#allAppoinments");
 
     pEvent.click(function (event) {
         isMed = false;
@@ -38,6 +40,15 @@ function ifClicked() {
         createAboutForm();
 
     });
+
+    allAppoinments.click(function (event) {
+        isMed = false;
+        refreshPage();
+        createAppointmentForm();
+        getAllAppointment("/getAppointments/None");
+    });
+
+
 
     searchPatients.click(function (event) {
         isMed = false;
@@ -230,6 +241,7 @@ function ifClicked() {
 
         var index = event.target.id.substring(13, event.target.id.length);
         var value = $("#collapseApp" + index)[0].value;
+        console.log(patientDiagInfo);
         var route = "/updateAppointment/" + Object.keys(patientDiagInfo.Appointments)[index] + "/" + value;
         isMed = true;
         postData(route);
@@ -238,7 +250,6 @@ function ifClicked() {
 
     //'/addAppointment/<patientid>/<roomnumber>/<starttime>/<duration>/<description>'
     var appAddButton = $("[id^='addAppFormSub']");
-  
     appAddButton.click(function (event) {
         $("#lastAleartBT").remove();
         $("#lastAleartDateBad").remove();
@@ -251,7 +262,7 @@ function ifClicked() {
 
         var route = "/addAppointment/" + insNum + "/101/" + starttime + "/" + dur + "/" + dis;
         isMed = true;
-    
+
         var insAlertBad = $("<div class=alert role=alert id=lastAleartBT >Please input valid Insurance Number</div>");
         var alertGood = $("<div class=alert role=alert id=lastAleartGood >You have succesfully added an appointment!</div>");
         var dateAlertBad = $("<div class=alert role=alert id=lastAleartDateBad >Please input valid date</div>");
@@ -261,30 +272,30 @@ function ifClicked() {
         if (insNum.length != 9 || isNaN(insNum)) {
             $("#addAppFormSub").before(insAlertBad);
             $("#lastAleartBT").addClass("alert-warning");
-        } else if(starttime.length != 19){
+        } else if (starttime.length != 19) {
             $("#addAppFormSub").before(dateAlertBad);
             $("#lastAleartDateBad").addClass("alert-warning");
-        } else if(Number(dur) != 60 && Number(dur) != 90){
+        } else if (Number(dur) != 60 && Number(dur) != 90) {
             $("#addAppFormSub").before(durAlertBad);
             $("#lastAleartDurBad").addClass("alert-warning");
-         } else {
+        } else {
             $("#addAppFormSub").before(alertGood);
             $("#lastAleartGood").addClass("alert-success");
             postData(route);
         }
     });
 
-        //'/removeAppointment/<starttime>''
-        var appRemoveButton = $("[id^='appRemove']");
-        appRemoveButton.click(function (event) {
-    
-            var index = event.target.id.substring(9, event.target.id.length);
-            var starttime = Object.keys(patientDiagInfo.Appointments)[index];
-            var route = "/removeAppointment/" + starttime;
-            isMed = true;
-        
-            postData(route);
-        });
+    //'/removeAppointment/<starttime>''
+    var appRemoveButton = $("[id^='appRemove']");
+    appRemoveButton.click(function (event) {
+
+        var index = event.target.id.substring(9, event.target.id.length);
+        var starttime = Object.keys(patientDiagInfo.Appointments)[index];
+        var route = "/removeAppointment/" + starttime;
+        isMed = true;
+
+        postData(route);
+    });
 }
 
 function getPatientData(route) {
@@ -298,7 +309,7 @@ function getPatientData(route) {
             } else {
                 createPatientCards(patients);
             }
-         
+
 
 
         }
@@ -326,6 +337,23 @@ function getMedData(route, isMed) {
     xmlhttp.send();
 }
 
+function getAllAppointment(route) {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var patients = JSON.parse(this.responseText);
+            usedRoute = route;
+            createAllAppointmentCards(patients);
+
+        }
+
+    };
+
+    xmlhttp.open("GET", "http://23.152.224.38" + route, true);
+    xmlhttp.setRequestHeader("Content-Type", "text/xml");
+    xmlhttp.send();
+}
+
 function postData(route) {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
@@ -334,7 +362,7 @@ function postData(route) {
 
         }
         getPatientData(usedRoute);
-      
+
 
     };
 
@@ -346,17 +374,17 @@ function postData(route) {
 function createPatientForm() {
     $("#pat").show();
     $("#about").hide();
-    $("#app").hide();
+    $("#allAppoinment").hide();
 }
 function createAboutForm() {
     $("#pat").hide();
     $("#about").show();
-    $("#app").hide();
+    $("#allAppoinment").hide();
 }
 
 function createAppointmentForm() {
 
-    $("#app").show();
+    $("#allAppoinment").show();
     $("#pat").hide();
     $("#about").hide();
 }
@@ -455,10 +483,6 @@ function createMedicationDiagnosisCards(patients) {
     var row = $("<div class=row id=row>")
     $("#cardContainer").append(row)
     patientDiagInfo = patients;
-
-
-
-
     var col = $("<div class=col-4 id=colMed>");
     $("#row").append(col);
     var card = $("<div class=card id=cardMed>");
@@ -543,6 +567,54 @@ function createMedicationDiagnosisCards(patients) {
     ifClicked();
 }
 
+//'/getAppointments/<upcomingOnly>'
+function createAllAppointmentCards(data) {
+    refreshPage();
+    var row = $("<div class=row id=row>")
+    $("#appCardContainer").append(row)
+    var i= 0;
+
+  
+    jQuery.each(data, function(j, val) {
+
+        var col = $("<div class=col-4 id=colMed"+ i+">");
+        $("#row").append(col);
+        var card = $("<div class=card id=cardMed"+ i+">");
+        $("#cardMed" + i).css("width", "18em");
+        $("#colMed"+ i).append(card);
+        var card1 = $("<div class=card-body id=card-bodyMed"+ i+">");
+        $("#cardMed"+ i).append(card1);
+        var card2 = $("<h5 class=card-title id=card-titleMed"+ i+" >" + patientName + "</h5>");
+        $("#card-bodyMed"+ i).append(card2);
+        var liOne = $("<ul class=list-group list-group-flush id=liOneMed"+ i+" >");
+        $("#card-bodyMed"+ i).append(liOne);
+        var test = $("<div class=accordion id=accordionExampleMed"+ i+">");
+        $("#card-bodyMed"+ i).append(test);
+
+        var appBut = $("<button class=list-group-item type=button data-toggle=collapse data-target=#addRemoveDiv" + i + " aria-expanded=true aria-controls=collapseTwo id=buttonApp" + i + " > " + "<Strong>Appointmnet</Strong>: " + j + " </button>");
+        $("#accordionExampleMed"+i).append(appBut);
+        var addRemoveDiv = $("<div id=addRemoveDiv" + i + " class=collapse aria-labelledby=headingTwo data-parent=#accordionExampleMed" +i+"></div>");
+        $("#accordionExampleMed"+i).append(addRemoveDiv)
+
+        var remove = $("<button type=button class=btn id=appRemove" + i + " >Remove this Appointment</button>");
+        $(remove).addClass("btn-danger");
+        $("#addRemoveDiv" + i).append(remove);
+
+
+        var dis = $("<li class=list-group-item type=button data-toggle=collapse data-target=#appDiv" + i + " aria-expanded=true aria-controls=collapseOne id=buttonApp" + i + " > <Strong>Description</Strong>: " + val.Description + " </li>");
+        $("#accordionExampleMed"+i).append(dis);
+        var collapseAppDiv = $("<div id=appDiv" + i + " class=collapse aria-labelledby=headingOne data-parent=#accordionExampleMed" +i+" ></div>");
+        $("#accordionExampleMed"+i).append(collapseAppDiv);
+        var appForm = $("<input type=text id=collapseApp" + i + " class=form-conrol></input>");
+        $("#appDiv" + i).append(appForm);
+        var appFormSub = $("<button type=button class=btn btn-primary id=appFormSubmit" + i + " >Update</button></div></div></div>");
+        $("#appDiv" + i).append(appFormSub);
+        var dur = $("<li class=list-group-item> <Strong>Duration</Strong>(Min): " + val.Duration + " </li>");
+        $("#accordionExampleMed"+i).append(dur);
+        i += 1;
+      });
+      ifClicked();
+}
 
 function refreshPage() {
     $("#row").remove();

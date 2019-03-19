@@ -31,6 +31,7 @@
               <p class="card-text">Search for a patient and access their information.</p>
 
               <button type="submit" class="btn btn-primary" id="Patient">Patient Page</button>
+              <button type="submit" class="btn btn-primary" id="allAppoinments">Show all Appointments</button>
               <button type="submit" class="btn btn-primary" id="About">About</button>
             </div>
           </div>
@@ -39,7 +40,9 @@
       </div>
       <div class="row" id="about">
         <div class="col">
-          <p>This website is to simulate how a receptionist would enter patient information and appointments into a database from a website. The receptionist will not be able to change medication information or diagnosis information because the information can only be controlled by a doctor. </p>
+          <p>This website is to simulate how a receptionist would enter patient information and appointments into a
+            database from a website. The receptionist will not be able to change medication information or diagnosis
+            information because the information can only be controlled by a doctor. </p>
         </div>
       </div>
 
@@ -49,10 +52,12 @@
 
           <form>
             <div class="form-group">
-              <label for="exampleInputEmail1">Find a Patient (If all feilds are left blank, all patients will be returned)</label>
+              <label for="exampleInputEmail1">Find a Patient (If all feilds are left blank, all patients will be
+                returned)</label>
               <div class="input-group">
                 <div class="input-group-prepend">
-                  <span class="input-group-text">Search by<strong>&nbsp;Full Name </strong> &nbsp;or&nbsp;<strong> Insurance Number </strong></span>
+                  <span class="input-group-text">Search by<strong>&nbsp;Full Name </strong> &nbsp;or&nbsp;<strong>
+                      Insurance Number </strong></span>
                 </div>
                 <input type="text" aria-label="First name" class="form-control" placeholder="First Name"
                   id="searchPatientFirst">
@@ -116,7 +121,8 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text">Insurance Number</span>
                     </div>
-                    <input type="text" aria-label="Insurance Number" class="form-control" id="addPatientInsurance" placeholder="Ex: 000000000">
+                    <input type="text" aria-label="Insurance Number" class="form-control" id="addPatientInsurance"
+                      placeholder="Ex: 000000000">
                   </div>
                   <div class="input-group">
                     <div class="input-group-prepend">
@@ -154,8 +160,8 @@
             <div class="card">
               <div class="card-header" id="headingThree">
                 <h2 class="mb-0">
-                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree"
-                    aria-expanded="false" aria-controls="collapseTwo">
+                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                    data-target="#collapseThree" aria-expanded="false" aria-controls="collapseTwo">
                     Add Appointment
                   </button>
                 </h2>
@@ -166,31 +172,34 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text">insurance Number</span>
                     </div>
-                    <input type="text" aria-label="Date and Time" class="form-control" id="insNumAddApp" placeholder="Ex: 100000000">
-            
+                    <input type="text" aria-label="Date and Time" class="form-control" id="insNumAddApp"
+                      placeholder="Ex: 100000000">
+
                   </div>
                   <div class="input-group">
                     <div class="input-group-prepend">
                       <span class="input-group-text">Date and Time</span>
                     </div>
-                   
-                    <input type="text" aria-label="Date and Time" class="form-control" id="addAppFormTime" placeholder="YYYY-MM-DD HH:MM:SS">
-                   
+
+                    <input type="text" aria-label="Date and Time" class="form-control" id="addAppFormTime"
+                      placeholder="YYYY-MM-DD HH:MM:SS">
+
                   </div>
                   <div class="input-group">
                     <div class="input-group-prepend">
                       <span class="input-group-text">Duration</span>
                     </div>
 
-                    <input type="text" aria-label="Discription" class="form-control" id="addAppFormDur" placeholder="60 or 90 (min)" >
-                  
+                    <input type="text" aria-label="Discription" class="form-control" id="addAppFormDur"
+                      placeholder="60 or 90 (min)">
+
                   </div>
                   <div class="input-group">
                     <div class="input-group-prepend">
                       <span class="input-group-text">Appointment Discription</span>
                     </div>
-                
-                    <input type="text" aria-label="Type" class="form-control" id="addAppFormType" >
+
+                    <input type="text" aria-label="Type" class="form-control" id="addAppFormType">
                   </div>
 
                 </div>
@@ -200,7 +209,14 @@
           </div>
         </div>
       </div>
-    </div>
+
+      <div class="row" id="allAppoinment">
+        <div class="col">
+
+          <div class="card-deck" id="appCardContainer">
+          </div>
+        </div>
+      </div>
 
     </div>
 
