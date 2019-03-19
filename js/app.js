@@ -28,6 +28,7 @@ function ifClicked() {
     var removePatient = $("#removePatient");
     var about = $("#About");
     var allAppoinments = $("#allAppoinments");
+    var upCardContainer = $("#upcomingAppoinment");
 
     pEvent.click(function (event) {
         isMed = false;
@@ -48,10 +49,16 @@ function ifClicked() {
         isMed = false;
         isShowAll = true;
         refreshPage();
-        createAppointmentForm();
+        createAppointmentForm(false);
       
     });
-
+    upCardContainer.click(function (event) {
+        isMed = false;
+        isShowAll = true;
+        refreshPage();
+        createAppointmentForm(true);
+      
+    });
 
 
     searchPatients.click(function (event) {
@@ -420,12 +427,20 @@ function createAboutForm() {
     $("#allAppoinment").hide();
 }
 
-function createAppointmentForm() {
+function createAppointmentForm(allOrNone) {
 
     $("#allAppoinment").show();
     $("#pat").hide();
     $("#about").hide();
-    getAllAppointment("/getAppointments/None");
+    var route = "";
+    if(allOrNone){
+        route =  "/getAppointments/All";
+       
+    }else{
+        route = "/getAppointments/None";
+    }
+    console.log(route);
+    getAllAppointment(route);
 }
 
 
@@ -632,6 +647,8 @@ function createAllAppointmentCards(data) {
         var test = $("<div class=accordion id=accordionExampleMed"+ i+">");
         $("#card-bodyMed"+ i).append(test);
 
+        var name = $("<li class=list-group-item type=button data-toggle=collapse data-target=#appDiv" + i + " aria-expanded=true aria-controls=collapseOne id=buttonApp" + i + " > <Strong>Name:</Strong>: " + val.Patient + " </li>");
+        $("#accordionExampleMed"+i).append(name);
         var appBut = $("<button class=list-group-item type=button data-toggle=collapse data-target=#addRemoveDiv" + i + " aria-expanded=true aria-controls=collapseTwo id=buttonApp" + i + " > " + "<Strong>Appointmnet</Strong>: " + j + " </button>");
         $("#accordionExampleMed"+i).append(appBut);
         var addRemoveDiv = $("<div id=addRemoveDiv" + i + " class=collapse aria-labelledby=headingTwo data-parent=#accordionExampleMed" +i+"></div>");
