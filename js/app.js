@@ -647,7 +647,7 @@ function createAllAppointmentCards(data) {
         var test = $("<div class=accordion id=accordionExampleMed"+ i+">");
         $("#card-bodyMed"+ i).append(test);
 
-        var name = $("<li class=list-group-item type=button data-toggle=collapse data-target=#appDiv" + i + " aria-expanded=true aria-controls=collapseOne id=buttonApp" + i + " > <Strong>Name:</Strong>: " + val.Patient + " </li>");
+        var name = $("<li class=list-group-item type=button data-toggle=collapse data-target=#appDiv" + i + " aria-expanded=true aria-controls=collapseOne id=buttonApp" + i + " > <Strong>Patient</Strong>: " + val.Patient + " </li>");
         $("#accordionExampleMed"+i).append(name);
         var appBut = $("<button class=list-group-item type=button data-toggle=collapse data-target=#addRemoveDiv" + i + " aria-expanded=true aria-controls=collapseTwo id=buttonApp" + i + " > " + "<Strong>Appointmnet</Strong>: " + j + " </button>");
         $("#accordionExampleMed"+i).append(appBut);
