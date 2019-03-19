@@ -14,6 +14,7 @@ var patientDiagInfo = "";
 var patientName = "";
 var patientInsNum = "";
 var patientIndex = "";
+var allApps = "";
 var isMed = false;
 var isShowAll = false;
 //Used to refresh page with current patient info
@@ -30,12 +31,14 @@ function ifClicked() {
 
     pEvent.click(function (event) {
         isMed = false;
+        var isShowAll = false;
         refreshPage();
         createPatientForm();
 
     });
     about.click(function (event) {
         isMed = false;
+        isShowAll = false;
         refreshPage();
         createAboutForm();
 
@@ -43,15 +46,17 @@ function ifClicked() {
 
     allAppoinments.click(function (event) {
         isMed = false;
+        isShowAll = true;
         refreshPage();
         createAppointmentForm();
-        getAllAppointment("/getAppointments/None");
+      
     });
 
 
 
     searchPatients.click(function (event) {
         isMed = false;
+        isShowAll = false;
         var valueFirst = $("#searchPatientFirst")[0].value;
         var valueLast = $("#searchPatientLast")[0].value;
         var valueIns = $("#searchPatientIns")[0].value;
@@ -244,9 +249,23 @@ function ifClicked() {
         console.log(patientDiagInfo);
         var route = "/updateAppointment/" + Object.keys(patientDiagInfo.Appointments)[index] + "/" + value;
         isMed = true;
+        isShowAll = false;
         postData(route);
 
-    });
+    });  
+    var appAllUpdate = $("[id^='appAllFormSubmit']");
+    appAllUpdate.click(function (event) {
+
+        var index = event.target.id.substring(16, event.target.id.length);
+        console.log(index);
+        var value = $("#collapseApp" + index)[0].value;
+        
+    //     console.log( Object.keys(data)[0]);
+    // console.log(data[Object.keys(data)[0]]);
+        var route = "/updateAppointment/" +  Object.keys(allApps)[index] + "/" + value;
+        postData(route);
+
+    });   
 
     //'/addAppointment/<patientid>/<roomnumber>/<starttime>/<duration>/<description>'
     var appAddButton = $("[id^='addAppFormSub']");
@@ -262,6 +281,7 @@ function ifClicked() {
 
         var route = "/addAppointment/" + insNum + "/101/" + starttime + "/" + dur + "/" + dis;
         isMed = true;
+        isShowAll = false;
 
         var insAlertBad = $("<div class=alert role=alert id=lastAleartBT >Please input valid Insurance Number</div>");
         var alertGood = $("<div class=alert role=alert id=lastAleartGood >You have succesfully added an appointment!</div>");
@@ -293,6 +313,7 @@ function ifClicked() {
         var starttime = Object.keys(patientDiagInfo.Appointments)[index];
         var route = "/removeAppointment/" + starttime;
         isMed = true;
+        isShowAll = false;
 
         postData(route);
     });
@@ -306,7 +327,9 @@ function getPatientData(route) {
             usedRoute = route;
             if (isMed) {
                 createMedicationDiagnosisCards(patients);
-            } else {
+            } else if(isShowAll){
+                createAllAppointmentCards(patients);
+            }else {
                 createPatientCards(patients);
             }
 
@@ -343,6 +366,7 @@ function getAllAppointment(route) {
         if (this.readyState == 4 && this.status == 200) {
             var patients = JSON.parse(this.responseText);
             usedRoute = route;
+            allApps = patients;
             createAllAppointmentCards(patients);
 
         }
@@ -387,12 +411,14 @@ function createAppointmentForm() {
     $("#allAppoinment").show();
     $("#pat").hide();
     $("#about").hide();
+    getAllAppointment("/getAppointments/None");
 }
 
 
 function createPatientCards(patients) {
     refreshPage();
     isMed = false;
+    isShowAll = false;
     var i;
     var row = $("<div class=row id=row>")
     $("#cardContainer").append(row)
@@ -573,8 +599,9 @@ function createAllAppointmentCards(data) {
     var row = $("<div class=row id=row>")
     $("#appCardContainer").append(row)
     var i= 0;
-
-  
+   
+    console.log( Object.keys(data)[0]);
+  console.log(data[Object.keys(data)[0]]);
     jQuery.each(data, function(j, val) {
 
         var col = $("<div class=col-4 id=colMed"+ i+">");
@@ -607,7 +634,7 @@ function createAllAppointmentCards(data) {
         $("#accordionExampleMed"+i).append(collapseAppDiv);
         var appForm = $("<input type=text id=collapseApp" + i + " class=form-conrol></input>");
         $("#appDiv" + i).append(appForm);
-        var appFormSub = $("<button type=button class=btn btn-primary id=appFormSubmit" + i + " >Update</button></div></div></div>");
+        var appFormSub = $("<button type=button class=btn btn-primary id=appAllFormSubmit" + i + " >Update</button></div></div></div>");
         $("#appDiv" + i).append(appFormSub);
         var dur = $("<li class=list-group-item> <Strong>Duration</Strong>(Min): " + val.Duration + " </li>");
         $("#accordionExampleMed"+i).append(dur);
