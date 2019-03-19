@@ -317,6 +317,20 @@ function ifClicked() {
 
         postData(route);
     });
+
+        //'/removeAppointment/<starttime>''
+        var appRemoveAllButton = $("[id^='appAllRemove']");
+        appRemoveAllButton.click(function (event) {
+    
+            var index = event.target.id.substring(12, event.target.id.length);
+            console.log(index);
+            var starttime = Object.keys(allApps)[index];
+            var route = "/removeAppointment/" + starttime;
+            isMed = false;
+            isShowAll = true;
+    
+            postData(route);
+        });
 }
 
 function getPatientData(route) {
@@ -623,7 +637,7 @@ function createAllAppointmentCards(data) {
         var addRemoveDiv = $("<div id=addRemoveDiv" + i + " class=collapse aria-labelledby=headingTwo data-parent=#accordionExampleMed" +i+"></div>");
         $("#accordionExampleMed"+i).append(addRemoveDiv)
 
-        var remove = $("<button type=button class=btn id=appRemove" + i + " >Remove this Appointment</button>");
+        var remove = $("<button type=button class=btn id=appAllRemove" + i + " >Remove this Appointment</button>");
         $(remove).addClass("btn-danger");
         $("#addRemoveDiv" + i).append(remove);
 
