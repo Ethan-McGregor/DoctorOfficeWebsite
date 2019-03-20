@@ -636,16 +636,16 @@ function createMedicationDiagnosisCards(patients) {
             $("#card-bodyMedg"+h).append(test);
 
 
-            var pmBut = $("<button class=list-group-item type=button data-toggle=collapse aria-expanded=true aria-controls=collapseOne id=buttonPm" + i + " > " + "<Strong>Prescirbed Medication</Strong>: " + Object.keys(patients.PrescribedMedication)[h] + " </button>");
+            var pmBut = $("<button class=list-group-item type=button data-toggle=collapse aria-expanded=true aria-controls=collapseOne id=buttonPm" + h + " > " + "<Strong>Prescirbed Medication</Strong>: " + Object.keys(patients.PrescribedMedication)[h] + " </button>");
             $("#accordionExampleMedg"+h).append(pmBut);
-            var collapsePmDiv = $("<div id=pmDiv" + i + " class=collapse aria-labelledby=headingOne data-parent=#accordionExampleMed></div>");
+            var collapsePmDiv = $("<div id=pmDiv" + h + " class=collapse aria-labelledby=headingOne data-parent=#accordionExampleMed></div>");
             $("#accordionExampleMedg"+h).append(collapsePmDiv);
             var max = $("<li class=list-group-item> <Strong>Max Dosage</Strong>: " + patients.PrescribedMedication[Object.keys(patients.PrescribedMedication)[h]].MaxDosage + " </li>");
-            $("#buttonPm" + i).append(max);
+            $("#buttonPm" + h).append(max);
             var amount = $("<li class=list-group-item> <Strong>Prescribed Amount</Strong>: " + patients.PrescribedMedication[Object.keys(patients.PrescribedMedication)[h]].PrescribedAmount + " </li>");
-            $("#buttonPm" + i).append(amount);
+            $("#buttonPm" + h).append(amount);
             var refill = $("<li class=list-group-item> <Strong>Refill</Strong>: " + patients.PrescribedMedication[Object.keys(patients.PrescribedMedication)[h]].Refill + " </li>");
-            $("#buttonPm" + i).append(refill);
+            $("#buttonPm" + h).append(refill);
 
         };
     };
