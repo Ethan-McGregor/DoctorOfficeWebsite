@@ -48,7 +48,7 @@ var pEvent = $("#Patient");
         allAppoinments.click(function (event) {
             isMed = false;
             isShowAll = true;
-            loc = "allAPp";
+            loc = "allAPP";
             refreshPage();
             createAppointmentForm(false);
 
@@ -219,7 +219,7 @@ var pEvent = $("#Patient");
     });
     
     });
-    
+
 function getPatientData(route) {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
@@ -625,6 +625,7 @@ function createMedicationDiagnosisCards(patients) {
         var route = "/updateAppointment/" + Object.keys(patientDiagInfo.Appointments)[index] + "/" + value;
         isMed = true;
         isShowAll = false;
+      
         postData(route);
 
     });
@@ -699,6 +700,8 @@ function createAllAppointmentCards(data) {
         console.log(index);
         var value = $("#collapseApp" + index)[0].value;
         var route = "/updateAppointment/" + Object.keys(allApps)[index] + "/" + value;
+        console.log(loc);
+        console.log("update");
         postData(route);
 
     });
