@@ -537,7 +537,12 @@ function createMedicationDiagnosisCards(patients) {
     refreshPage();
  
     patientDiagInfo = patients;
-   
+    var testRow = $("<div class=row id=row>")
+    $("#cardContainer").append(testRow)
+    var col = $("<div class=col-4 id=colM>");
+    $("#row").append(col);
+    var nameCared = $("<h5 class=card-title id=card-titleMeda"+i+" >" + patientName + "</h5>");
+    $("#colM").append(nameCared);
 
     if (patients.Appointments) {
         var row = $("<div class=row id=rowa>")
@@ -551,8 +556,8 @@ function createMedicationDiagnosisCards(patients) {
             $("#colMeda"+i).append(card);
             var card1 = $("<div class=card-body id=card-bodyMeda"+i+">");
             $("#cardMeda"+i).append(card1);
-            var card2 = $("<h5 class=card-title id=card-titleMeda"+i+" >" + patientName + "</h5>");
-            $("#card-bodyMeda"+i).append(card2);
+            // var card2 = $("<h5 class=card-title id=card-titleMeda"+i+" >" + patientName + "</h5>");
+            // $("#card-bodyMeda"+i).append(card2);
             var liOne = $("<ul class=list-group list-group-flush id=liOneMeda"+i+">");
             $("#card-bodyMeda"+i).append(liOne);
             var test = $("<div class=accordion id=accordionExampleMeda"+i+">");
@@ -562,7 +567,7 @@ function createMedicationDiagnosisCards(patients) {
 
             var appBut = $("<button class=list-group-item type=button data-toggle=collapse data-target=#addRemoveDiv" + i + " aria-expanded=true aria-controls=collapseTwo id=buttonApp" + i + " > " + "<Strong>Appointmnet</Strong>: " + Object.keys(patients.Appointments)[i] + " </button>");
             $("#accordionExampleMeda"+i).append(appBut);
-            var addRemoveDiv = $("<div id=addRemoveDiv" + i + " class=collapse aria-labelledby=headingTwo data-parent=#accordionExampleMed></div>");
+            var addRemoveDiv = $("<div id=addRemoveDiv" + i + " class=collapse aria-labelledby=headingTwo data-parent=#accordionExampleMeda"+i+"></div>");
             $("#accordionExampleMeda"+i).append(addRemoveDiv)
 
             var remove = $("<button type=button class=btn id=appRemove" + i + " >Remove this Appointment</button>");
@@ -595,8 +600,8 @@ function createMedicationDiagnosisCards(patients) {
             $("#colMedd"+j).append(card);
             var card1 = $("<div class=card-body id=card-bodyMedd"+j+">");
             $("#cardMedd"+j).append(card1);
-            var card2 = $("<h5 class=card-title id=card-titleMedd"+j+" >" + patientName + "</h5>");
-            $("#card-bodyMedd"+j).append(card2);
+            // var card2 = $("<h5 class=card-title id=card-titleMedd"+j+" >" + patientName + "</h5>");
+            // $("#card-bodyMedd"+j).append(card2);
             var liOne = $("<ul class=list-group list-group-flush id=liOneMedd"+j+">");
             $("#card-bodyMedd"+j).append(liOne);
             var test = $("<div class=accordion id=accordionExampleMedd"+j+">");
@@ -628,8 +633,8 @@ function createMedicationDiagnosisCards(patients) {
             $("#colMedg"+h).append(card);
             var card1 = $("<div class=card-body id=card-bodyMedg"+h+">");
             $("#cardMedg"+h).append(card1);
-            var card2 = $("<h5 class=card-title id=card-titleMedg"+h+" >" + patientName + "</h5>");
-            $("#card-bodyMedg"+h).append(card2);
+            // var card2 = $("<h5 class=card-title id=card-titleMedg"+h+" >" + patientName + "</h5>");
+            // $("#card-bodyMedg"+h).append(card2);
             var liOne = $("<ul class=list-group list-group-flush id=liOneMedg"+h+">");
             $("#card-bodyMedg"+h).append(liOne);
             var test = $("<div class=accordion id=accordionExampleMedg"+h+">");
