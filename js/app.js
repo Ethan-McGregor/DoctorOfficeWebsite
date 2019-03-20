@@ -640,8 +640,6 @@ function createAllAppointmentCards(data) {
         $("#colMed"+ i).append(card);
         var card1 = $("<div class=card-body id=card-bodyMed"+ i+">");
         $("#cardMed"+ i).append(card1);
-        var card2 = $("<h5 class=card-title id=card-titleMed"+ i+" >" + patientName + "</h5>");
-        $("#card-bodyMed"+ i).append(card2);
         var liOne = $("<ul class=list-group list-group-flush id=liOneMed"+ i+" >");
         $("#card-bodyMed"+ i).append(liOne);
         var test = $("<div class=accordion id=accordionExampleMed"+ i+">");
