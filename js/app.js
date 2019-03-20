@@ -614,8 +614,6 @@ function createMedicationDiagnosisCards(patients) {
         };
     };
 
-
-
     //All accoridan buttons have this
     $("[id^='button']").css("width", "100%");
     $("[id^='button']").css("text-align", "left");
