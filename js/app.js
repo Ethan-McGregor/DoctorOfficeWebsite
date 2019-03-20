@@ -219,20 +219,7 @@ var pEvent = $("#Patient");
     });
     
     });
-
-  
     
-  
-
- 
-  
-
-  
-
-    
-
- 
-
 function getPatientData(route) {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
@@ -704,7 +691,6 @@ function createAllAppointmentCards(data) {
         $("#accordionExampleMed" + i).append(dur);
         i += 1;
     });
-    // ifClicked();
     var appAllUpdate = $("[id^='appAllFormSubmit']");
     appAllUpdate.click(function (event) {
         isMed = false;
@@ -712,9 +698,6 @@ function createAllAppointmentCards(data) {
         var index = event.target.id.substring(16, event.target.id.length);
         console.log(index);
         var value = $("#collapseApp" + index)[0].value;
-
-        //     console.log( Object.keys(data)[0]);
-        // console.log(data[Object.keys(data)[0]]);
         var route = "/updateAppointment/" + Object.keys(allApps)[index] + "/" + value;
         postData(route);
 
@@ -724,7 +707,6 @@ function createAllAppointmentCards(data) {
        appRemoveAllButton.click(function (event) {
    
            var index = event.target.id.substring(12, event.target.id.length);
-           console.log(index);
            var starttime = Object.keys(allApps)[index];
            var route = "/removeAppointment/" + starttime;
            isMed = false;
@@ -737,6 +719,3 @@ function createAllAppointmentCards(data) {
 function refreshPage() {
     $("[id^='row']").remove();
 }
-
-
-// ifClicked();
