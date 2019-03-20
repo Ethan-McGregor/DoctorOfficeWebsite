@@ -541,6 +541,7 @@ function createMedicationDiagnosisCards(patients) {
     $("#cardContainer").append(testRow)
     var col = $("<div class=col-4 id=colM>");
     $("#row").append(col);
+    $('#colM')
     var nameCared = $("<h5 class=card-title id=card-titleMeda"+i+" >" + patientName + "</h5>");
     $("#colM").append(nameCared);
 
