@@ -535,32 +535,35 @@ function createMedicationDiagnosisCards(patients) {
     var j = 0;
     var h = 0;
     refreshPage();
-    var row = $("<div class=row id=row>")
-    $("#cardContainer").append(row)
+ 
     patientDiagInfo = patients;
-    var col = $("<div class=col-4 id=colMed>");
-    $("#row").append(col);
-    var card = $("<div class=card id=cardMed>");
-    $("#cardMed").css("width", "18em");
-    $("#colMed").append(card);
-    var card1 = $("<div class=card-body id=card-bodyMed>");
-    $("#cardMed").append(card1);
-    var card2 = $("<h5 class=card-title id=card-titleMed >" + patientName + "</h5>");
-    $("#card-bodyMed").append(card2);
-    var liOne = $("<ul class=list-group list-group-flush id=liOneMed >");
-    $("#card-bodyMed").append(liOne);
-    var test = $("<div class=accordion id=accordionExampleMed >");
-    $("#card-bodyMed").append(test);
-    if (patients.Appointments) {
-        for (i = 0; i < Object.keys(patients.Appointments).length; i++) {
+   
 
+    if (patients.Appointments) {
+        var row = $("<div class=row id=rowa>")
+        $("#cardContainer").append(row)
+        for (i = 0; i < Object.keys(patients.Appointments).length; i++) {
+           
+            var col = $("<div class=col-4 id=colMeda"+i+">");
+            $("#rowa").append(col);
+            var card = $("<div class=card id=cardMeda"+i+">");
+            $("#cardMeda"+i).css("width", "18em");
+            $("#colMeda"+i).append(card);
+            var card1 = $("<div class=card-body id=card-bodyMeda"+i+">");
+            $("#cardMeda"+i).append(card1);
+            var card2 = $("<h5 class=card-title id=card-titleMeda"+i+" >" + patientName + "</h5>");
+            $("#card-bodyMeda"+i).append(card2);
+            var liOne = $("<ul class=list-group list-group-flush id=liOneMeda"+i+">");
+            $("#card-bodyMeda"+i).append(liOne);
+            var test = $("<div class=accordion id=accordionExampleMeda"+i+">");
+            $("#card-bodyMeda"+i).append(test);
             // console.log(Object.keys(patients.Appointments)[i]);
             // console.log(patients.Appointments[Object.keys(patients.Appointments)[i]]);
 
             var appBut = $("<button class=list-group-item type=button data-toggle=collapse data-target=#addRemoveDiv" + i + " aria-expanded=true aria-controls=collapseTwo id=buttonApp" + i + " > " + "<Strong>Appointmnet</Strong>: " + Object.keys(patients.Appointments)[i] + " </button>");
-            $("#accordionExampleMed").append(appBut);
+            $("#accordionExampleMeda"+i).append(appBut);
             var addRemoveDiv = $("<div id=addRemoveDiv" + i + " class=collapse aria-labelledby=headingTwo data-parent=#accordionExampleMed></div>");
-            $("#accordionExampleMed").append(addRemoveDiv)
+            $("#accordionExampleMeda"+i).append(addRemoveDiv)
 
             var remove = $("<button type=button class=btn id=appRemove" + i + " >Remove this Appointment</button>");
             $(remove).addClass("btn-danger");
@@ -568,42 +571,75 @@ function createMedicationDiagnosisCards(patients) {
 
 
             var dis = $("<li class=list-group-item type=button data-toggle=collapse data-target=#appDiv" + i + " aria-expanded=true aria-controls=collapseOne id=buttonApp" + i + " > <Strong>Description</Strong>: " + patients.Appointments[Object.keys(patients.Appointments)[i]].Description + " </li>");
-            $("#accordionExampleMed").append(dis);
-            var collapseAppDiv = $("<div id=appDiv" + i + " class=collapse aria-labelledby=headingOne data-parent=#accordionExampleMed></div>");
-            $("#accordionExampleMed").append(collapseAppDiv);
+            $("#accordionExampleMeda" +i).append(dis);
+            var collapseAppDiv = $("<div id=appDiv" + i + " class=collapse aria-labelledby=headingOne data-parent=#accordionExampleMeda"+i+"></div>");
+            $("#accordionExampleMeda"+i).append(collapseAppDiv);
             var appForm = $("<input type=text id=collapseApp" + i + " class=form-conrol></input>");
             $("#appDiv" + i).append(appForm);
             var appFormSub = $("<button type=button class=btn btn-primary id=appFormSubmit" + i + " >Update</button></div></div></div>");
             $("#appDiv" + i).append(appFormSub);
             var dur = $("<li class=list-group-item> <Strong>Duration</Strong>(Min): " + patients.Appointments[Object.keys(patients.Appointments)[i]].Duration + " </li>");
-            $("#accordionExampleMed").append(dur);
+            $("#accordionExampleMeda"+i).append(dur);
 
         };
     };
-
+            var row = $("<div class=row id=rowd>")
+            $("#cardContainer").append(row)
     if (patients.Diagnoses) {
         for (j = 0; j < Object.keys(patients.Diagnoses).length; j++) {
+           
+            var col = $("<div class=col-4 id=colMedd"+j+">");
+            $("#rowd").append(col);
+            var card = $("<div class=card id=cardMedd"+j+">");
+            $("#cardMedd"+j).css("width", "18em");
+            $("#colMedd"+j).append(card);
+            var card1 = $("<div class=card-body id=card-bodyMedd"+j+">");
+            $("#cardMedd"+j).append(card1);
+            var card2 = $("<h5 class=card-title id=card-titleMedd"+j+" >" + patientName + "</h5>");
+            $("#card-bodyMedd"+j).append(card2);
+            var liOne = $("<ul class=list-group list-group-flush id=liOneMedd"+j+">");
+            $("#card-bodyMedd"+j).append(liOne);
+            var test = $("<div class=accordion id=accordionExampleMedd"+j+">");
+            $("#card-bodyMedd"+j).append(test);
+
             // console.log(Object.keys(patients.Diagnoses)[j]);
             // console.log(patients.Diagnoses[Object.keys(patients.Diagnoses)[j]]);
 
-            var diagBut = $("<button class=list-group-item type=button data-toggle=collapse  aria-expanded=true aria-controls=collapseOne id=buttonDiag" + i + " > " + "<Strong>Diagnosis</Strong>: " + Object.keys(patients.Diagnoses)[j] + " </button>");
-            $("#accordionExampleMed").append(diagBut);
-            var collapseDiagDiv = $("<div id=diagDiv" + i + " class=collapse aria-labelledby=headingOne data-parent=#accordionExampleMed></div>");
-            $("#accordionExampleMed").append(collapseDiagDiv);
+            var diagBut = $("<button class=list-group-item type=button data-toggle=collapse  aria-expanded=true aria-controls=collapseOne id=buttonDiag" + j + " > " + "<Strong>Diagnosis</Strong>: " + Object.keys(patients.Diagnoses)[j] + " </button>");
+            $("#accordionExampleMedd"+j).append(diagBut);
+            var collapseDiagDiv = $("<div id=diagDiv" + i + " class=collapse aria-labelledby=headingOne data-parent=#accordionExampleMedd"+j+"></div>");
+            $("#accordionExampleMedd"+j).append(collapseDiagDiv);
             var time = $("<li class=list-group-item> <Strong>Notes</Strong>: " + patients.Diagnoses[Object.keys(patients.Diagnoses)[j]].Remarks + " </li>");
-            $("#buttonDiag" + i).append(time);
+            $("#buttonDiag" + j).append(time);
 
         };
     };
+    var row = $("<div class=row id=rowg>")
+            $("#cardContainer").append(row)
     if (patients.PrescribedMedication) {
         for (h = 0; h < Object.keys(patients.PrescribedMedication).length; h++) {
             // console.log(Object.keys(patients.PrescribedMedication)[h]);
             // console.log(patients.PrescribedMedication[Object.keys(patients.PrescribedMedication)[h]]);
+            
+            var col = $("<div class=col-4 id=colMedg"+h+">");
+            $("#rowg").append(col);
+            var card = $("<div class=card id=cardMedg"+h+">");
+            $("#cardMedg"+h).css("width", "18em");
+            $("#colMedg"+h).append(card);
+            var card1 = $("<div class=card-body id=card-bodyMedg"+h+">");
+            $("#cardMedg"+h).append(card1);
+            var card2 = $("<h5 class=card-title id=card-titleMedg"+h+" >" + patientName + "</h5>");
+            $("#card-bodyMedg"+h).append(card2);
+            var liOne = $("<ul class=list-group list-group-flush id=liOneMedg"+h+">");
+            $("#card-bodyMedg"+h).append(liOne);
+            var test = $("<div class=accordion id=accordionExampleMedg"+h+">");
+            $("#card-bodyMedg"+h).append(test);
+
 
             var pmBut = $("<button class=list-group-item type=button data-toggle=collapse aria-expanded=true aria-controls=collapseOne id=buttonPm" + i + " > " + "<Strong>Prescirbed Medication</Strong>: " + Object.keys(patients.PrescribedMedication)[h] + " </button>");
-            $("#accordionExampleMed").append(pmBut);
+            $("#accordionExampleMedg"+h).append(pmBut);
             var collapsePmDiv = $("<div id=pmDiv" + i + " class=collapse aria-labelledby=headingOne data-parent=#accordionExampleMed></div>");
-            $("#accordionExampleMed").append(collapsePmDiv);
+            $("#accordionExampleMedg"+h).append(collapsePmDiv);
             var max = $("<li class=list-group-item> <Strong>Max Dosage</Strong>: " + patients.PrescribedMedication[Object.keys(patients.PrescribedMedication)[h]].MaxDosage + " </li>");
             $("#buttonPm" + i).append(max);
             var amount = $("<li class=list-group-item> <Strong>Prescribed Amount</Strong>: " + patients.PrescribedMedication[Object.keys(patients.PrescribedMedication)[h]].PrescribedAmount + " </li>");
@@ -671,7 +707,7 @@ function createAllAppointmentCards(data) {
 }
 
 function refreshPage() {
-    $("#row").remove();
+    $("[id^='row']").remove();
 }
 
 
