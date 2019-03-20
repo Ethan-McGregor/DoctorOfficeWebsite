@@ -19,10 +19,9 @@ var isMed = false;
 var isShowAll = false;
 //Used to refresh page with current patient info
 var usedRoute = "";
+var loc = "";
 
-function ifClicked() {
-
-    var pEvent = $("#Patient");
+var pEvent = $("#Patient");
     var searchPatients = $("#SearchPatients");
     var addPatient = $("#addPatient");
     var removePatient = $("#removePatient");
@@ -30,260 +29,160 @@ function ifClicked() {
     var allAppoinments = $("#allAppoinments");
     var upCardContainer = $("#upcomingAppoinment");
 
-    pEvent.click(function (event) {
-        isMed = false;
-        isShowAll = false;
-        refreshPage();
-        createPatientForm();
+    $(document).ready(function(){
+        pEvent.click(function (event) {
+            isMed = false;
+            isShowAll = false;
+            refreshPage();
+            createPatientForm();
 
-    });
-    about.click(function (event) {
-        isMed = false;
-        isShowAll = false;
-        refreshPage();
-        createAboutForm();
+        });
+        about.click(function (event) {
+            isMed = false;
+            isShowAll = false;
+            refreshPage();
+            createAboutForm();
 
-    });
+        });
 
-    allAppoinments.click(function (event) {
-        isMed = false;
-        isShowAll = true;
-        refreshPage();
-        createAppointmentForm(false);
+        allAppoinments.click(function (event) {
+            isMed = false;
+            isShowAll = true;
+            loc = "allAPp";
+            refreshPage();
+            createAppointmentForm(false);
 
-    });
-    upCardContainer.click(function (event) {
-        isMed = false;
-        isShowAll = true;
-        refreshPage();
-        createAppointmentForm(true);
+        });
+        upCardContainer.click(function (event) {
+            isMed = false;
+            isShowAll = true;
+            loc = "allAPP";
+            refreshPage();
+            createAppointmentForm(true);
 
-    });
-
-
-    searchPatients.click(function (event) {
-         patientsInfo = "";
-         patientDiagInfo = "";
-         patientName = "";
-         patientInsNum = "";
-         patientIndex = "";
-         allApps = "";
-         isMed = false;
-         isShowAll = false;
-         usedRoute = "";
-
-        var valueFirst = $("#searchPatientFirst")[0].value;
-        var valueLast = $("#searchPatientLast")[0].value;
-        var valueIns = $("#searchPatientIns")[0].value;
-        if (valueFirst == "") {
-            valueFirst = 'None';
-        };
-        if (valueLast == "") {
-            valueLast = 'None';
-        };
-
-        if (valueIns == "") {
-            valueIns = 'None';
-            var route = "/findPatient/" + valueFirst + "/None/" + valueLast + "/None";
-        } else {
-            var route = "/findPatient/None/None/None/" + valueIns;
-        };
+        });
 
 
-        getPatientData(route);
+        searchPatients.click(function (event) {
+            patientsInfo = "";
+            patientDiagInfo = "";
+            patientName = "";
+            patientInsNum = "";
+            patientIndex = "";
+            allApps = "";
+            isMed = false;
+            isShowAll = false;
+            usedRoute = "";
+            loc = "patient";
+            var valueFirst = $("#searchPatientFirst")[0].value;
+            var valueLast = $("#searchPatientLast")[0].value;
+            var valueIns = $("#searchPatientIns")[0].value;
+            if (valueFirst == "") {
+                valueFirst = 'None';
+            };
+            if (valueLast == "") {
+                valueLast = 'None';
+            };
 
-    });
-
-
-    addPatient.click(function (event) {
-        console.log($("#addPatientFirstName"));
-        $("#insAleart").remove();
-        $("#firstAleart").remove();
-        $("#lastAleart").remove();
-        $("#sAlert").remove();
-        $("#zeroAlert").remove();
-        var firstName = $("#addPatientFirstName")[0].value;
-        var lastName = $("#addPatientLastName")[0].value;
-        var middleName = $("#addPatientMiddleName")[0].value;
-        var dateofBirth = $("#addPatientDOB")[0].value;
-        var gender = $("#addPatientGender")[0].value;
-        var phone = $("#addPatientPhone")[0].value;
-        var insNum = $("#addPatientInsurance")[0].value;
-        var address = $("#addPatientAddress")[0].value;
-        var addInsAlert = $("<div class=alert role=alert id=insAleart >Please input a valid Insurance number I.E 9 digets</div>");
-        var addFirstAlert = $("<div class=alert role=alert id=firstAleart >Please input a First Name</div>");
-        var addLastAlert = $("<div class=alert role=alert id=lastAleart >Please input a Last Name</div>");
-        var zero = $("<div class=alert role=alert id=zeroAleart >Please do not start the insurance num as a 0</div>");
-        var addAddedPatientAlert = $("<div class=alert role=alert id=sAlert ><Strong>Sucess!</strong> You have added: " + firstName + " " + lastName + " as a patient.</div>");
-        var errorCount = 0;
-        if (firstName == "") {
-            $("#addPatient").before(addFirstAlert);
-            $("#firstAleart").addClass("alert-warning");
-            errorCount += 1;
-        };
-        if (lastName == "") {
-            $("#addPatient").before(addLastAlert);
-            $("#lastAleart").addClass("alert-warning");
-            errorCount += 1;
-        };
-        if (middleName == "") {
-            middleName = "None";
-        };
-        if (dateofBirth == "") {
-            dateofBirth = "None";
-        };
-        if (gender == "") {
-            gender = "None";
-        };
-        if (phone == "") {
-            phone = "None";
-        };
-        if (insNum == "" || insNum.length != 9 || isNaN(insNum)) {
-            $("#addPatient").before(addInsAlert);
-            $("#insAleart").addClass("alert-warning");
-            errorCount += 1;
-        };
-        if (insNum[0] == 0) {
-            console.log("Started with 0");
-            $("#addPatient").before(zero);
-            $("#zeroAleart").addClass("alert-warning");
-            errorCount += 1;
-        };
-        if (address == "") {
-            address = "None";
-        };
-
-        if (errorCount == 0) {
-            var route = "/addPatient/" + firstName + "/" + middleName + "/" + lastName + "/" + gender + "/" + dateofBirth + "/" + address + "/" + phone + "/" + insNum;
-            console.log(route);
-            postData(route);
-            $("#addPatient").before(addAddedPatientAlert);
-            $("#sAlert").addClass("alert-success");
-        }
+            if (valueIns == "") {
+                valueIns = 'None';
+                var route = "/findPatient/" + valueFirst + "/None/" + valueLast + "/None";
+            } else {
+                var route = "/findPatient/None/None/None/" + valueIns;
+            };
 
 
-    });
+            getPatientData(route);
 
-    removePatient.click(function (event) {
-        $("#sAlertR").remove();
-        $("#lastAleartB").remove();
-        var insNum = $("#removePatientinsurance")[0].value;
-        var removeAddedPatientAlert = $("<div class=alert role=alert id=sAlertR ><Strong>Sucess!</strong> You have removed: " + insNum + " as a patient.</div>");
-        var bad = $("<div class=alert role=alert id=lastAleartB >Please input valid Insurance Number</div>");
-
-        if (insNum.length != 9 || isNaN(insNum)) {
-            $("#removePatient").before(bad);
-            $("#lastAleartB").addClass("alert-warning");
-        } else {
-            $("#removePatient").before(removeAddedPatientAlert);
-            $("#sAlertR").addClass("alert-success");
-            var route = "/removePatient/" + insNum;
-            postData(route);
-        }
-
-    });
-
-    var dobFormSubmit = $("[id^='dobFormSubmit']");
-    dobFormSubmit.click(function (event) {
-        var index = event.target.parentElement.parentElement.parentElement.id.substring(9, event.target.parentElement.parentElement.parentElement.id.length);
-        var insNum = patientsInfo[Number(index)].InsuranceNumber;
-        var value = $("#collapseDOB" + index)[0].value;
-        var route = "/updatePatient/None/None/None/None/" + value + "/None/None/None/" + insNum;
-
-        postData(route);
-
-
-    });
-
-    var genderFormSubmit = $("[id^='genderFormSubmit']");
-    genderFormSubmit.click(function (event) {
-        // var test = event.parent.id;
-        console.log(event);
-        var index = event.target.parentElement.parentElement.parentElement.id.substring(9, event.target.parentElement.parentElement.parentElement.id.length);
-        console.log("index");
-
-        console.log(index);
-        console.log("index");
-
-
-        var insNum = patientsInfo[Number(index)].InsuranceNumber;
-        var value = $("#collapseGender" + index)[0].value;
-        var route = "/updatePatient/None/None/None/" + value + "/None/None/None/None/" + insNum;
-        console.log(value);
-        console.log(patientsInfo);
-        postData(route);
-    });
-
-    var phoneFormSubmit = $("[id^='phoneFormSubmit']");
-    phoneFormSubmit.click(function (event) {
-        var index = event.target.parentElement.parentElement.parentElement.id.substring(9, event.target.parentElement.parentElement.parentElement.id.length);
-        var insNum = patientsInfo[Number(index)].InsuranceNumber;
-        var value = $("#collapsePhone" + index)[0].value;
-        var route = "/updatePatient/None/None/None/None/None/None/" + value + "/None/" + insNum;
-
-        postData(route);
-
-    });
-
-    var insFormSubmit = $("[id^='insFormSubmit']");
-    insFormSubmit.click(function (event) {
-        $("#sAlertRT").remove();
-        $("#lastAleartBT").remove();
-        var index = event.target.parentElement.parentElement.parentElement.id.substring(9, event.target.parentElement.parentElement.parentElement.id.length);
-        var insNum = patientsInfo[Number(index)].InsuranceNumber;
-        var value = $("#collapseIns" + index)[0].value;
-        var route = "/updatePatient/None/None/None/None/None/None/None/" + value + "/" + insNum;
-        var insAlertBad = $("<div class=alert role=alert id=lastAleartBT >Please input valid Insurance Number</div>");
-        if (value.length != 9 || isNaN(value)) {
-            $("#collapseIns" + index).before(insAlertBad);
-            $("#lastAleartBT").addClass("alert-warning");
-        } else {
-
-            postData(route);
-        }
-
-    });
-
-    var medDiag = $("[id^='card-link']");
-    medDiag.click(function (event) {
-        var index = event.target.id.substring(9, event.target.id.length);
-        var insNum = patientsInfo[Number(index)].InsuranceNumber;
-        patientInsNum = insNum;
-        patientIndex = index;
-        var route = "/getPatientInfo/" + insNum;
-        patientName = patientsInfo[Number(index)].Name;
-        getMedData(route);
-
-    });
-
-    var appUpdate = $("[id^='appFormSubmit']");
-    appUpdate.click(function (event) {
-
-        var index = event.target.id.substring(13, event.target.id.length);
-        var value = $("#collapseApp" + index)[0].value;
-        console.log(patientDiagInfo);
-        var route = "/updateAppointment/" + Object.keys(patientDiagInfo.Appointments)[index] + "/" + value;
-        isMed = true;
-        isShowAll = false;
-        postData(route);
-
-    });
-    var appAllUpdate = $("[id^='appAllFormSubmit']");
-    appAllUpdate.click(function (event) {
-        isMed = false;
-        isShowAll = true;
-        var index = event.target.id.substring(16, event.target.id.length);
-        console.log(index);
-        var value = $("#collapseApp" + index)[0].value;
-
-        //     console.log( Object.keys(data)[0]);
-        // console.log(data[Object.keys(data)[0]]);
-        var route = "/updateAppointment/" + Object.keys(allApps)[index] + "/" + value;
-        postData(route);
-
-    });
-
-    //'/addAppointment/<patientid>/<roomnumber>/<starttime>/<duration>/<description>'
+        });
+        addPatient.click(function (event) {
+            console.log($("#addPatientFirstName"));
+            $("#insAleart").remove();
+            $("#firstAleart").remove();
+            $("#lastAleart").remove();
+            $("#sAlert").remove();
+            $("#zeroAlert").remove();
+            var firstName = $("#addPatientFirstName")[0].value;
+            var lastName = $("#addPatientLastName")[0].value;
+            var middleName = $("#addPatientMiddleName")[0].value;
+            var dateofBirth = $("#addPatientDOB")[0].value;
+            var gender = $("#addPatientGender")[0].value;
+            var phone = $("#addPatientPhone")[0].value;
+            var insNum = $("#addPatientInsurance")[0].value;
+            var address = $("#addPatientAddress")[0].value;
+            var addInsAlert = $("<div class=alert role=alert id=insAleart >Please input a valid Insurance number I.E 9 digets</div>");
+            var addFirstAlert = $("<div class=alert role=alert id=firstAleart >Please input a First Name</div>");
+            var addLastAlert = $("<div class=alert role=alert id=lastAleart >Please input a Last Name</div>");
+            var zero = $("<div class=alert role=alert id=zeroAleart >Please do not start the insurance num as a 0</div>");
+            var addAddedPatientAlert = $("<div class=alert role=alert id=sAlert ><Strong>Sucess!</strong> You have added: " + firstName + " " + lastName + " as a patient.</div>");
+            var errorCount = 0;
+            if (firstName == "") {
+                $("#addPatient").before(addFirstAlert);
+                $("#firstAleart").addClass("alert-warning");
+                errorCount += 1;
+            };
+            if (lastName == "") {
+                $("#addPatient").before(addLastAlert);
+                $("#lastAleart").addClass("alert-warning");
+                errorCount += 1;
+            };
+            if (middleName == "") {
+                middleName = "None";
+            };
+            if (dateofBirth == "") {
+                dateofBirth = "None";
+            };
+            if (gender == "") {
+                gender = "None";
+            };
+            if (phone == "") {
+                phone = "None";
+            };
+            if (insNum == "" || insNum.length != 9 || isNaN(insNum)) {
+                $("#addPatient").before(addInsAlert);
+                $("#insAleart").addClass("alert-warning");
+                errorCount += 1;
+            };
+            if (insNum[0] == 0) {
+                console.log("Started with 0");
+                $("#addPatient").before(zero);
+                $("#zeroAleart").addClass("alert-warning");
+                errorCount += 1;
+            };
+            if (address == "") {
+                address = "None";
+            };
+    
+            if (errorCount == 0) {
+                var route = "/addPatient/" + firstName + "/" + middleName + "/" + lastName + "/" + gender + "/" + dateofBirth + "/" + address + "/" + phone + "/" + insNum;
+                console.log(route);
+                postData(route);
+                $("#addPatient").before(addAddedPatientAlert);
+                $("#sAlert").addClass("alert-success");
+            }
+    
+    
+        });
+    
+        removePatient.click(function (event) {
+            $("#sAlertR").remove();
+            $("#lastAleartB").remove();
+            var insNum = $("#removePatientinsurance")[0].value;
+            var removeAddedPatientAlert = $("<div class=alert role=alert id=sAlertR ><Strong>Sucess!</strong> You have removed: " + insNum + " as a patient.</div>");
+            var bad = $("<div class=alert role=alert id=lastAleartB >Please input valid Insurance Number</div>");
+    
+            if (insNum.length != 9 || isNaN(insNum)) {
+                $("#removePatient").before(bad);
+                $("#lastAleartB").addClass("alert-warning");
+            } else {
+                $("#removePatient").before(removeAddedPatientAlert);
+                $("#sAlertR").addClass("alert-success");
+                var route = "/removePatient/" + insNum;
+                postData(route);
+            }
+    
+        });
+          //'/addAppointment/<patientid>/<roomnumber>/<starttime>/<duration>/<description>'
     var appAddButton = $("[id^='addAppFormSub']");
     appAddButton.click(function (event) {
         $("#lastAleartBT").remove();
@@ -318,34 +217,21 @@ function ifClicked() {
             postData(route);
         }
     });
-
-    //'/removeAppointment/<starttime>''
-    var appRemoveButton = $("[id^='appRemove']");
-    appRemoveButton.click(function (event) {
-
-        var index = event.target.id.substring(9, event.target.id.length);
-        var starttime = Object.keys(patientDiagInfo.Appointments)[index];
-        var route = "/removeAppointment/" + starttime;
-        isMed = true;
-        isShowAll = false;
-
-        postData(route);
+    
     });
 
-    //'/removeAppointment/<starttime>''
-    var appRemoveAllButton = $("[id^='appAllRemove']");
-    appRemoveAllButton.click(function (event) {
+  
+    
+  
 
-        var index = event.target.id.substring(12, event.target.id.length);
-        console.log(index);
-        var starttime = Object.keys(allApps)[index];
-        var route = "/removeAppointment/" + starttime;
-        isMed = false;
-        isShowAll = true;
+ 
+  
 
-        postData(route);
-    });
-}
+  
+
+    
+
+ 
 
 function getPatientData(route) {
     var xmlhttp = new XMLHttpRequest();
@@ -353,11 +239,11 @@ function getPatientData(route) {
         if (this.readyState == 4 && this.status == 200) {
             var patients = JSON.parse(this.responseText);
             usedRoute = route;
-            if (isMed) {
+            if (loc == "med") {
                 createMedicationDiagnosisCards(patients);
-            } else if (isShowAll) {
+            } else if (loc == "allAPP") {
                 createAllAppointmentCards(patients);
-            } else {
+            } else if(loc == "patient" ) {
                 createPatientCards(patients);
             }
 
@@ -536,7 +422,79 @@ function createPatientCards(patients) {
     //All accoridan buttons have this
     $("[id^='button']").css("width", "100%");
     $("[id^='button']").css("text-align", "left");
-    ifClicked();
+    // ifClicked();
+    var dobFormSubmit = $("[id^='dobFormSubmit']");
+    dobFormSubmit.click(function (event) {
+        var index = event.target.parentElement.parentElement.parentElement.id.substring(9, event.target.parentElement.parentElement.parentElement.id.length);
+        var insNum = patientsInfo[Number(index)].InsuranceNumber;
+        var value = $("#collapseDOB" + index)[0].value;
+        var route = "/updatePatient/None/None/None/None/" + value + "/None/None/None/" + insNum;
+
+        postData(route);
+
+
+    });
+
+    var genderFormSubmit = $("[id^='genderFormSubmit']");
+    genderFormSubmit.click(function (event) {
+        // var test = event.parent.id;
+        console.log(event);
+        var index = event.target.parentElement.parentElement.parentElement.id.substring(9, event.target.parentElement.parentElement.parentElement.id.length);
+        console.log("index");
+
+        console.log(index);
+        console.log("index");
+
+
+        var insNum = patientsInfo[Number(index)].InsuranceNumber;
+        var value = $("#collapseGender" + index)[0].value;
+        var route = "/updatePatient/None/None/None/" + value + "/None/None/None/None/" + insNum;
+        console.log(value);
+        console.log(patientsInfo);
+        postData(route);
+    });
+
+    var phoneFormSubmit = $("[id^='phoneFormSubmit']");
+    phoneFormSubmit.click(function (event) {
+        var index = event.target.parentElement.parentElement.parentElement.id.substring(9, event.target.parentElement.parentElement.parentElement.id.length);
+        var insNum = patientsInfo[Number(index)].InsuranceNumber;
+        var value = $("#collapsePhone" + index)[0].value;
+        var route = "/updatePatient/None/None/None/None/None/None/" + value + "/None/" + insNum;
+
+        postData(route);
+
+    });
+
+    var insFormSubmit = $("[id^='insFormSubmit']");
+    insFormSubmit.click(function (event) {
+        $("#sAlertRT").remove();
+        $("#lastAleartBT").remove();
+        var index = event.target.parentElement.parentElement.parentElement.id.substring(9, event.target.parentElement.parentElement.parentElement.id.length);
+        var insNum = patientsInfo[Number(index)].InsuranceNumber;
+        var value = $("#collapseIns" + index)[0].value;
+        var route = "/updatePatient/None/None/None/None/None/None/None/" + value + "/" + insNum;
+        var insAlertBad = $("<div class=alert role=alert id=lastAleartBT >Please input valid Insurance Number</div>");
+        if (value.length != 9 || isNaN(value)) {
+            $("#collapseIns" + index).before(insAlertBad);
+            $("#lastAleartBT").addClass("alert-warning");
+        } else {
+
+            postData(route);
+        }
+
+    });
+    var medDiag = $("[id^='card-link']");
+    medDiag.click(function (event) {
+        var index = event.target.id.substring(9, event.target.id.length);
+        var insNum = patientsInfo[Number(index)].InsuranceNumber;
+        loc = "med";
+        patientInsNum = insNum;
+        patientIndex = index;
+        var route = "/getPatientInfo/" + insNum;
+        patientName = patientsInfo[Number(index)].Name;
+        getMedData(route);
+
+    });
 }
 
 function createMedicationDiagnosisCards(patients) {
@@ -670,7 +628,31 @@ function createMedicationDiagnosisCards(patients) {
     //All accoridan buttons have this
     $("[id^='button']").css("width", "100%");
     $("[id^='button']").css("text-align", "left");
-    ifClicked();
+    // ifClicked();
+    var appUpdate = $("[id^='appFormSubmit']");
+    appUpdate.click(function (event) {
+
+        var index = event.target.id.substring(13, event.target.id.length);
+        var value = $("#collapseApp" + index)[0].value;
+        console.log(patientDiagInfo);
+        var route = "/updateAppointment/" + Object.keys(patientDiagInfo.Appointments)[index] + "/" + value;
+        isMed = true;
+        isShowAll = false;
+        postData(route);
+
+    });
+    //'/removeAppointment/<starttime>''
+    var appRemoveButton = $("[id^='appRemove']");
+    appRemoveButton.click(function (event) {
+
+        var index = event.target.id.substring(9, event.target.id.length);
+        var starttime = Object.keys(patientDiagInfo.Appointments)[index];
+        var route = "/removeAppointment/" + starttime;
+        isMed = true;
+        isShowAll = false;
+
+        postData(route);
+    });
 }
 
 //'/getAppointments/<upcomingOnly>'
@@ -722,7 +704,34 @@ function createAllAppointmentCards(data) {
         $("#accordionExampleMed" + i).append(dur);
         i += 1;
     });
-    ifClicked();
+    // ifClicked();
+    var appAllUpdate = $("[id^='appAllFormSubmit']");
+    appAllUpdate.click(function (event) {
+        isMed = false;
+        isShowAll = true;
+        var index = event.target.id.substring(16, event.target.id.length);
+        console.log(index);
+        var value = $("#collapseApp" + index)[0].value;
+
+        //     console.log( Object.keys(data)[0]);
+        // console.log(data[Object.keys(data)[0]]);
+        var route = "/updateAppointment/" + Object.keys(allApps)[index] + "/" + value;
+        postData(route);
+
+    });
+       //'/removeAppointment/<starttime>''
+       var appRemoveAllButton = $("[id^='appAllRemove']");
+       appRemoveAllButton.click(function (event) {
+   
+           var index = event.target.id.substring(12, event.target.id.length);
+           console.log(index);
+           var starttime = Object.keys(allApps)[index];
+           var route = "/removeAppointment/" + starttime;
+           isMed = false;
+           isShowAll = true;
+   
+           postData(route);
+       });
 }
 
 function refreshPage() {
@@ -730,4 +739,4 @@ function refreshPage() {
 }
 
 
-ifClicked();
+// ifClicked();
